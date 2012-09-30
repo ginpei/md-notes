@@ -1,3 +1,7 @@
 <%= notice %>
-<p><%= link_to 'Sign in with Twitter...', root_path + 'auth/twitter' %></p>
+<% if current_user %>
 <p><%= link_to 'Sign out', signout_path %></p>
+<p><%= current_user.inspect %></p>
+<% else %>
+<p><%= link_to 'Sign in with Twitter...', signin_path(:twitter) %></p>
+<% end %>
