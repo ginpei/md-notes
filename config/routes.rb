@@ -1,4 +1,6 @@
 MdNotes::Application.routes.draw do
+  resources :users
+
   root to: "miscellaneous#home"
 
   # The priority is based upon order of creation:
