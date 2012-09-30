@@ -7,6 +7,8 @@ MdNotes::Application.routes.draw do
 
   root to: "miscellaneous#home"
 
+  match '/:account' => 'users#show'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
