@@ -1,4 +1,6 @@
 MdNotes::Application.routes.draw do
+  resources :notes
+
   match '/auth/:provider/callback' => 'sessions#callback'
   match '/signout' => 'sessions#sign_out', as: :signout
   resources :users
