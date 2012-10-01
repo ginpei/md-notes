@@ -1,25 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Account:</b>
-  <%= @user.account %>
-</p>
-
-<p>
-  <b>Image url:</b>
-  <%= @user.image_url %>
-</p>
-
-<p>
-  <b>Provider:</b>
-  <%= @user.provider %>
-</p>
-
-<p>
-  <b>Provider uid:</b>
-  <%= @user.provider_uid %>
-</p>
-
+<h1><%= image_tag @user.image_url, size: '48x48', alt: '' %> @<%= @user.account %></h1>
 
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>
