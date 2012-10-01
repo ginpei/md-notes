@@ -34,7 +34,7 @@ class NotesController < ApplicationController
 
   # GET /notes/1/edit
   def edit
-    @note = Note.find(params[:id])
+    @note = current_user.notes.find(params[:id])
   end
 
   # POST /notes
