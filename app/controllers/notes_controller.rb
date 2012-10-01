@@ -24,7 +24,7 @@ class NotesController < ApplicationController
   # GET /notes/new
   # GET /notes/new.json
   def new
-    @note = Note.new
+    @note = current_user.notes.build
 
     respond_to do |format|
       format.html # new.html.erb
@@ -40,7 +40,7 @@ class NotesController < ApplicationController
   # POST /notes
   # POST /notes.json
   def create
-    @note = Note.new(params[:note])
+    @note = current_user.notes.build(params[:note])
 
     respond_to do |format|
       if @note.save
