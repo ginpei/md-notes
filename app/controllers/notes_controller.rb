@@ -72,7 +72,7 @@ class NotesController < ApplicationController
   # DELETE /notes/1
   # DELETE /notes/1.json
   def destroy
-    @note = Note.find(params[:id])
+    @note = current_user.notes.find(params[:id])
     @note.destroy
 
     respond_to do |format|
