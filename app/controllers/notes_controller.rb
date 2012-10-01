@@ -56,7 +56,7 @@ class NotesController < ApplicationController
   # PUT /notes/1
   # PUT /notes/1.json
   def update
-    @note = Note.find(params[:id])
+    @note = current_user.notes.find(params[:id])
 
     respond_to do |format|
       if @note.update_attributes(params[:note])
