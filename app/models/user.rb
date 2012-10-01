@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  has_many :notes
   attr_accessible :account, :image_url, :provider, :provider_uid
 
   def self.create_with_auth(auth)
