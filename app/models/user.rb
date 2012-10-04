@@ -14,6 +14,6 @@ class User < ActiveRecord::Base
   end
 
   def to_param
-    @account
+    account
   end
 end
