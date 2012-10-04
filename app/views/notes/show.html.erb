@@ -1,12 +1,4 @@
 <p id="notice"><%= notice %></p>
-<h1><%= @note.title_to_show %></h1>
-<h2>by <%= link_to '@' + current_user.account, current_user %></h2>
-<script class="note-body-source" type="text/html">
-<%= @note.body %>
-</script>
-<div class="note-body"></div>
-<script>
-$('.note-body').last().html(Markdown($('.note-body-source').last().prop('text')));
-</script>
+<%= render 'notes/article', note: @note %>
 <%= link_to 'Edit', edit_note_path(@note) %> |
 <%= link_to 'Back', notes_path %>
