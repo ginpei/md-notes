@@ -10,6 +10,11 @@
 }
 .note-subject {
   margin: 0;
+  text-shadow: 1px 1px 0 #fff;
+
+  a {
+    color: #666;
+  }
 }
 .note-informations {
   list-style-type: none;
