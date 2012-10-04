@@ -7,7 +7,7 @@
   <script class="note-body-source" type="text/html">
 <%= note.body %>
   </script>
-  <div class="note-body"></div>
+  <article class="note-body"></article>
   <script>
     $('.note-body').last().html(Markdown($('.note-body-source').last().prop('text')));
   </script>
