@@ -12,4 +12,8 @@ class User < ActiveRecord::Base
       user.image_url = info['image']
     end
   end
+
+  def to_param
+    @account
+  end
 end

@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   # GET /user_name
   # GET /user_name.json
   def show
-    @user = User.find_by_account(params[:account])
+    @user = User.find_by_account(params[:id])
     @notes = @user.notes.latest
 
     respond_to do |format|
