@@ -1,0 +1,13 @@
+<article class="note">
+  <h2 class="note-subject"><%= link_to note.title_to_show, note %></h2>
+  <div class="note-updated_at"><%= note.updated_at %></div>
+  <div class="note-author">by <%= link_to '@' + note.user.account, note.user %></div>
+  <script class="note-body-source" type="text/html">
+    <%= note.body %>
+  </script>
+  <div class="note-body"></div>
+  <script>
+    $('.note-body').last().html(Markdown($('.note-body-source').last().prop('text')));
+  </script>
+  <div class="note-permalink"><%= link_to 'Permalink', note %></div>
+</article>
