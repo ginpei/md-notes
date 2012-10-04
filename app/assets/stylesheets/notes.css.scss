@@ -1,3 +1,28 @@
 // Place all the styles related to the notes controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.note {
+  border: solid 1px #ccc;
+  border-radius: 4px;
+  background-color: #eee;
+  padding: 4px 10px;
+  margin: 20px;
+}
+.note-subject {
+  margin: 0;
+}
+.note-informations {
+  list-style-type: none;
+  padding: 0;
+  margin: 0 20px;
+}
+.note-informations-item {
+  display: inline;
+  margin-right: 1em;
+}
+.note-body {
+  border: solid 1px #ccc;
+  background-color: #fff;
+  padding: 10px;
+  margin: 10px;
+}
