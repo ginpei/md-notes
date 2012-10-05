@@ -7,11 +7,10 @@
     <li class="note-informations-item"><%= link_to 'Edit', edit_note_path(note) %></li>
     <% end %>
   </ul>
-  <script class="note-body-source" type="text/html">
-<%= note.body %>
-  </script>
-  <article class="note-body"></article>
+  <article class="note-body">
+    <textarea class="note-body-source"><%= note.body %></textarea>
+  </article>
   <script>
-    $('.note-body').last().html(Markdown($('.note-body-source').last().prop('text')));
+    $('.note-body').last().html(Markdown($('.note-body-source').last().val()));
   </script>
 </article>
