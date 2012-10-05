@@ -1,3 +1,4 @@
 <% @notes.each do |note| %>
   <%= render 'notes/article', note: note %>
 <% end %>
+<%= paginate @notes %>

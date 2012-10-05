@@ -2,9 +2,8 @@ class Note < ActiveRecord::Base
   belongs_to :user
   attr_accessible :body, :subject
 
-  def self.latest
-    order('updated_at DESC').all
-  end
+  default_scope order: 'updated_at DESC'
+  paginates_per 10
 
   def subject_to_show
     subject = self['subject']
