@@ -1,4 +1,5 @@
 <p id="notice"><%= notice %></p>
+<div><%= link_to '&laquo; Note list'.html_safe, notes_path, class: 'btn' %></div>
 <%= render 'notes/article', note: @note %>
 <%= link_to 'Edit', edit_note_path(@note) %> |
 <%= link_to 'Back', notes_path %>
