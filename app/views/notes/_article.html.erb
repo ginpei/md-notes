@@ -1,7 +1,7 @@
 <article class="note">
   <h2 class="note-subject"><%= link_to note.title_to_show, note %></h2>
   <ul class="note-informations">
-    <li class="note-informations-item"><%= note.updated_at %></li>
+    <li class="note-informations-item">Updated at <%= link_to note.updated_at, note %></li>
     <li class="note-informations-item">by <%= link_to '@' + note.user.account, note.user %></li>
   </ul>
   <script class="note-body-source" type="text/html">
