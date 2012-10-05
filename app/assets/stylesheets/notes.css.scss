@@ -4,6 +4,7 @@
 .note {
   border: solid 1px #ccc;
   border-radius: 4px;
+  box-shadow: 1px 1px 5px #ddd inset;
   background-color: #eee;
   padding: 4px 10px;
   margin: 20px;
@@ -38,7 +39,7 @@
 .note-body {
   background-color: #fff;
   border: solid 1px #ccc;
-  box-shadow: 3px 3px 5px #ccc;
+  box-shadow: 1px 1px 5px #ddd;
   padding: 10px;
   margin: 10px;
 }
