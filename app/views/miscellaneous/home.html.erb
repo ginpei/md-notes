@@ -1,12 +1,2 @@
-<%= notice %>
-<% if current_user %>
-<p>
-  <%= link_to 'Sign out', signout_path %> |
-  <%= link_to 'My Page', current_user %> |
-  <%= link_to 'New Note', new_note_path %>
-</p>
-<% else %>
-<p><%= link_to 'Sign in with Twitter...', signin_path(:twitter) %></p>
-<% end %>
 <h1>MD-Notes</h1>
 <%= render 'notes/list' %>
