@@ -8,4 +8,12 @@ jQuery ($) ->
 		compileNote $(nBody)
 
 compileNote = ($body) ->
-	$body.html Markdown($body.find('.note-body-source').val())
+	source = $body.find('.note-body-source').val()
+	html = removeScripts(Markdown(source))
+	$body.html html
+
+removeScripts = (source) ->
+	source
+		.replace(/<script/ig, '&lt;script')
+		.replace(/<\/script/ig, '&lt;/script')
+		.replace(/\son/ig, ' on&zwnj;')
