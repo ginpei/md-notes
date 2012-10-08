@@ -5,5 +5,7 @@ NS = window
 
 jQuery ($) ->
 	$('.note-body').each (index, nBody) ->
-		$body = $(nBody)
-		$body.html Markdown($body.find('.note-body-source').val())
+		compileNote $(nBody)
+
+compileNote = ($body) ->
+	$body.html Markdown($body.find('.note-body-source').val())
