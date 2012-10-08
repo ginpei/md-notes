@@ -11,6 +11,6 @@
     <textarea class="note-body-source"><%= note.body %></textarea>
   </article>
   <script>
-    $('.note-body').last().html(Markdown($('.note-body-source').last().val()));
+    compileLastNote();
   </script>
 </article>
