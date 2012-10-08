@@ -9,8 +9,14 @@ jQuery ($) ->
 
 compileNote = ($body) ->
 	source = $body.find('.note-body-source').val()
-	html = removeScripts(Markdown(source))
+	html = removeScripts(Markdown(extendPre(source)))
 	$body.html html
+
+extendPre = (source) ->
+	source
+		.replace(/~~~~\n((?:.|\s)*?)\n~~~~/g, (m0, m1) ->
+			'<pre>' + m1.replace(/</g, '&lt;') + '</pre>'
+		)
 
 removeScripts = (source) ->
 	source
