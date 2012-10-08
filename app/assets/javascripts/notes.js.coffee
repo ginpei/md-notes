@@ -3,5 +3,7 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 NS = window
 
-NS.compileLastNote = ->
-	$('.note-body').last().html Markdown($('.note-body-source').last().val())
+jQuery ($) ->
+	$('.note-body').each (index, nBody) ->
+		$body = $(nBody)
+		$body.html Markdown($body.find('.note-body-source').val())
