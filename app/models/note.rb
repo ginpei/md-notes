@@ -5,9 +5,13 @@ class Note < ActiveRecord::Base
   default_scope order: 'updated_at DESC'
   paginates_per 10
 
-	VISIBILITY_PUBLIC = 2
-	VISIBILITY_ANYONE = 1
-	VISIBILITY_PRIVATE = 0
+  VISIBILITY_PUBLIC = 2
+  VISIBILITY_ANYONE = 1
+  VISIBILITY_PRIVATE = 0
+
+  def self.public
+    where("visibility = #{Note::VISIBILITY_PUBLIC}")
+  end
 
   def subject_to_show
     subject = self['subject']

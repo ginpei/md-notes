@@ -2,7 +2,7 @@ class NotesController < ApplicationController
   # GET /notes
   # GET /notes.json
   def index
-    @notes = Note.page params[:page]
+    @notes = Note.public.page params[:page]
 
     respond_to do |format|
       format.html # index.html.erb
@@ -14,6 +14,11 @@ class NotesController < ApplicationController
   # GET /notes/1.json
   def show
     @note = Note.find(params[:id])
+
+    if @note.user != current_user && @note.visibility == Note::VISIBILITY_PRIVATE
+      render text: 'Private.'  # FIXME
+      return
+    end
 
     respond_to do |format|
       format.html # show.html.erb

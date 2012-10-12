@@ -1,5 +1,5 @@
 class MiscellaneousController < ApplicationController
   def home
-    @notes = Note.page params[:page]
+    @notes = Note.public.page params[:page]
   end
 end
