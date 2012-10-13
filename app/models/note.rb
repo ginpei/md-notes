@@ -1,6 +1,6 @@
 class Note < ActiveRecord::Base
   belongs_to :user
-  attr_accessible :body, :subject
+  attr_accessible :body, :subject, :visibility
 
   default_scope order: 'updated_at DESC'
   paginates_per 10
