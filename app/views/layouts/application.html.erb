@@ -7,6 +7,27 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+<div id="global_header" class="header">
+  <h1 id="site_logo"><%= link_to 'MD-Notes', root_path %></h1>
+  <div id="global_header-info">
+    <% if current_user %>
+    <div class="item">
+      <div class="subject">@<%= current_user.account %></div>
+      <ul class="content">
+        <li><%= link_to 'My Page', current_user %></li>
+        <li><%= link_to 'Sigh out', signout_path %></li>
+      </ul>
+    </div>
+    <% else %>
+    <div class="item">
+      <div class="subject">Sign in</div>
+      <ul class="content">
+        <li><%= link_to 'with Twitter', signin_path('twitter') %></li>
+      </ul>
+    </div>
+    <% end %>
+  </div>
+</div>
 
 <%= notice %>
 <% if current_user %>
