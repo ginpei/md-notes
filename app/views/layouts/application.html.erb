@@ -15,6 +15,9 @@
       {label: 'My Page', url: current_user},
       {label: 'Sign out', url: signout_path},
     ] %>
+    <%= global_header_item 'Notes', [
+      {label: 'New note', url: new_note_path}
+    ] %>
     <% else %>
     <%= global_header_item 'Sign in', [
       {label: 'with Twitter', url: signin_path(:twitter)}
