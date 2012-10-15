@@ -18,15 +18,15 @@
     <%= global_header_item 'Notes', [
       {label: 'New note', url: new_note_path}
     ] %>
-    <%= global_header_item 'Help', [
-      {label: 'About App', url: about_path},
-      {label: 'Author', url: 'https://twitter.com/ginpei_jp'},
-    ] %>
     <% else %>
     <%= global_header_item 'Sign in', [
       {label: 'with Twitter', url: signin_path(:twitter)}
     ] %>
     <% end %>
+    <%= global_header_item 'Help', [
+      {label: 'About App', url: about_path},
+      {label: 'Author', url: 'https://twitter.com/ginpei_jp'},
+    ] %>
   </div>
 </div>
 
