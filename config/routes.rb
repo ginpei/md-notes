@@ -5,6 +5,9 @@ MdNotes::Application.routes.draw do
   match '/signout' => 'sessions#sign_out', as: :signout
   resources :users
 
+  match '/about' => 'miscellaneous#about', as: :about
+  match '/author' => 'miscellaneous#author', as: :author
+
   root to: "miscellaneous#home"
 
   # The priority is based upon order of creation:
