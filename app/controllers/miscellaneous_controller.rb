@@ -3,6 +3,6 @@ class MiscellaneousController < ApplicationController
     @notes = Note.public.page params[:page]
   end
 
-	def about
-	end
+  def about
+  end
 end
