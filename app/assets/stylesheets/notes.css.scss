@@ -42,6 +42,12 @@
   box-shadow: 1px 1px 5px #ddd;
   padding: 10px;
   margin: 10px;
+
+  &.note-format-text pre {
+    border-style: none;
+    background: none transparent;
+    font-family: inherit;
+  }
 }
 
 .form-body {

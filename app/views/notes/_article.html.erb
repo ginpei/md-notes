@@ -7,7 +7,7 @@
     <li class="note-informations-item"><%= link_to 'Edit', edit_note_path(note) %></li>
     <% end %>
   </ul>
-  <article class="note-body">
+  <article class="note-body note-format-<%= note.format_slug %>">
     <% if note.text? %>
       <pre><%= note.body %></pre>
     <% else %>

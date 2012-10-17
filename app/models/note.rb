@@ -29,4 +29,13 @@ class Note < ActiveRecord::Base
   def text?
     self[:format] == Note::FORMAT_TEXT
   end
+
+  def format_slug
+    case self[:format]
+    when Note::FORMAT_TEXT
+      'text'
+    when Note::FORMAT_MARKDOWN
+      'markdown'
+    end
+  end
 end
