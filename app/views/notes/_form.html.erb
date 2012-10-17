@@ -21,6 +21,11 @@
     <%= f.radio_button :visibility, Note::VISIBILITY_PRIVATE %>
     <%= f.label "#{:visibility}_#{Note::VISIBILITY_PRIVATE}", 'Private' %>
     <br />
+    <%= f.radio_button :format, Note::FORMAT_MARKDOWN %>
+    <%= f.label "#{:format}_#{Note::FORMAT_MARKDOWN}", 'Markdown Extra' %>
+    <%= f.radio_button :format, Note::FORMAT_TEXT %>
+    <%= f.label "#{:format}_#{Note::FORMAT_TEXT}", 'Plain text' %>
+    <br />
     <%= f.submit class: 'btn btn-primary' %>
   <p>
 <% end %>

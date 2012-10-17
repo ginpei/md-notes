@@ -1,6 +1,6 @@
 class Note < ActiveRecord::Base
   belongs_to :user
-  attr_accessible :body, :subject, :visibility
+  attr_accessible :body, :subject, :visibility, :format
 
   default_scope order: 'updated_at DESC'
   paginates_per 10
@@ -8,6 +8,9 @@ class Note < ActiveRecord::Base
   VISIBILITY_PUBLIC = 2
   VISIBILITY_ANYONE = 1
   VISIBILITY_PRIVATE = 0
+
+  FORMAT_MARKDOWN = 0
+  FORMAT_TEXT = 1
 
   def self.public
     where("visibility = #{Note::VISIBILITY_PUBLIC}")
