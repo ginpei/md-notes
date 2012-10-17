@@ -22,7 +22,7 @@ class Note < ActiveRecord::Base
       subject
     else
       body = self[:body]
-      body[0, body.index("\n")]
+      body[0, body.index("\n")].gsub(/#+\s+/, '')
     end
   end
 
