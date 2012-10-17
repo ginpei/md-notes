@@ -17,11 +17,11 @@ class Note < ActiveRecord::Base
   end
 
   def subject_to_show
-    subject = self['subject']
+    subject = self[:subject]
     if subject && subject != ''
       subject
     else
-      body = self['body']
+      body = self[:body]
       body[0, body.index("\n")]
     end
   end
