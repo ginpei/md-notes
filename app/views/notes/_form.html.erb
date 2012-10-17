@@ -14,6 +14,7 @@
   <p class="form-body">
     <%= f.text_field :subject, class: 'span10', placeholder: 'Subject' %><br />
     <%= f.text_area :body, class: 'span10',  %><br />
+    Visibility:
     <%= f.radio_button :visibility, Note::VISIBILITY_PUBLIC %>
     <%= f.label "#{:visibility}_#{Note::VISIBILITY_PUBLIC}", 'Public' %>
     <%= f.radio_button :visibility, Note::VISIBILITY_ANYONE %>
@@ -21,6 +22,7 @@
     <%= f.radio_button :visibility, Note::VISIBILITY_PRIVATE %>
     <%= f.label "#{:visibility}_#{Note::VISIBILITY_PRIVATE}", 'Private' %>
     <br />
+    Format:
     <%= f.radio_button :format, Note::FORMAT_MARKDOWN %>
     <%= f.label "#{:format}_#{Note::FORMAT_MARKDOWN}", 'Markdown Extra' %>
     <%= f.radio_button :format, Note::FORMAT_TEXT %>
