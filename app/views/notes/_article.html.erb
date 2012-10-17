@@ -8,6 +8,10 @@
     <% end %>
   </ul>
   <article class="note-body">
-    <textarea class="note-body-source"><%= note.body %></textarea>
+    <% if note.text? %>
+      <pre><%= note.body %></pre>
+    <% else %>
+      <textarea class="note-body-source"><%= note.body %></textarea>
+    <% end %>
   </article>
 </article>

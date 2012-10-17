@@ -25,4 +25,8 @@ class Note < ActiveRecord::Base
       body[0, body.index("\n")]
     end
   end
+
+  def text?
+    self[:format] == Note::FORMAT_TEXT
+  end
 end
