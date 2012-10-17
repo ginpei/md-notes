@@ -9,8 +9,9 @@ jQuery ($) ->
 
 compileNote = ($body) ->
 	source = $body.find('.note-body-source').val()
-	html = removeScripts(Markdown(extendPre(source)))
-	$body.html html
+	if source
+		html = removeScripts(Markdown(extendPre(source)))
+		$body.html html
 
 extendPre = (source) ->
 	source
