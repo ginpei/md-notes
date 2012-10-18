@@ -13,27 +13,39 @@
 
   <div class="form-body">
     <p>
-      <%= f.text_field :subject, class: 'span10', placeholder: 'Subject' %>
+      <%= f.text_field :subject, class: 'note-form-subject', placeholder: 'Subject' %>
     </p>
     <p>
-      <%= f.text_area :body, class: 'span10',  %>
+      <div class="tabbable tabs-below">
+        <div class="tab-content">
+          <%= f.text_area :body, id: 'editor', class: 'note-form-body' %>
+          <div id="viewer" class="note-form-body"></div>
+        </div>
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#editor" data-toggle="tab">Edit</a></li>
+          <li><a href="#viewer" data-toggle="tab">Preview</a></li>
+        </ul>
+      </div>
     </p>
-    <p>
-      Visibility:
-      <%= f.radio_button :visibility, Note::VISIBILITY_PUBLIC %>
-      <%= f.label "#{:visibility}_#{Note::VISIBILITY_PUBLIC}", 'Public' %>
-      <%= f.radio_button :visibility, Note::VISIBILITY_ANYONE %>
-      <%= f.label "#{:visibility}_#{Note::VISIBILITY_ANYONE}", 'Anyone knows URL' %>
-      <%= f.radio_button :visibility, Note::VISIBILITY_PRIVATE %>
-      <%= f.label "#{:visibility}_#{Note::VISIBILITY_PRIVATE}", 'Private' %>
-    </p>
-    <p>
-      Format:
-      <%= f.radio_button :format, Note::FORMAT_MARKDOWN %>
-      <%= f.label "#{:format}_#{Note::FORMAT_MARKDOWN}", 'Markdown Extra' %>
-      <%= f.radio_button :format, Note::FORMAT_TEXT %>
-      <%= f.label "#{:format}_#{Note::FORMAT_TEXT}", 'Plain text' %>
-    </p>
+    <fieldset>
+      <legend>Status</legend>
+      <p>
+        Visibility:
+        <%= f.radio_button :visibility, Note::VISIBILITY_PUBLIC %>
+        <%= f.label "#{:visibility}_#{Note::VISIBILITY_PUBLIC}", 'Public' %>
+        <%= f.radio_button :visibility, Note::VISIBILITY_ANYONE %>
+        <%= f.label "#{:visibility}_#{Note::VISIBILITY_ANYONE}", 'Anyone knows URL' %>
+        <%= f.radio_button :visibility, Note::VISIBILITY_PRIVATE %>
+        <%= f.label "#{:visibility}_#{Note::VISIBILITY_PRIVATE}", 'Private' %>
+      </p>
+      <p>
+        Format:
+        <%= f.radio_button :format, Note::FORMAT_MARKDOWN %>
+        <%= f.label "#{:format}_#{Note::FORMAT_MARKDOWN}", 'Markdown Extra' %>
+        <%= f.radio_button :format, Note::FORMAT_TEXT %>
+        <%= f.label "#{:format}_#{Note::FORMAT_TEXT}", 'Plain text' %>
+      </p>
+    </fieldset>
     <hr />
     <p>
       <%= link_to '&laquo; Back'.html_safe, @note, class: 'btn' %>

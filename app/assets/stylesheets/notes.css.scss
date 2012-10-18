@@ -60,4 +60,14 @@
     display: inline;
     margin-right: 1em;
   }
+
+  .note-form-subject {
+    height: 2.5em;
+  }
+
+  .note-form-subject,
+  .note-form-body {
+    box-sizing: border-box;
+    width: 100%;
+  }
 }
