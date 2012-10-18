@@ -27,7 +27,8 @@
     <%= f.label "#{:format}_#{Note::FORMAT_MARKDOWN}", 'Markdown Extra' %>
     <%= f.radio_button :format, Note::FORMAT_TEXT %>
     <%= f.label "#{:format}_#{Note::FORMAT_TEXT}", 'Plain text' %>
-    <br />
+    <hr />
+    <%= link_to '&laquo; Back'.html_safe, @note, class: 'btn' %>
     <%= f.submit class: 'btn btn-primary' %>
   <p>
 <% end %>
