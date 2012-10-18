@@ -1,4 +1,4 @@
-<%= form_for(@note) do |f| %>
+<%= form_for(@note, html: { id: 'note-form' }) do |f| %>
   <% if @note.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@note.errors.count, "error") %> prohibited this note from being saved:</h2>
@@ -17,11 +17,11 @@
     </p>
     <p>
       <div class="tabbable tabs-below">
-        <div class="tab-content">
-          <%= f.text_area :body, id: 'editor', class: 'note-form-body' %>
+        <div class="tab-content note-form-body-container">
+          <%= f.text_area :body, id: 'editor', class: 'note-form-body active' %>
           <div id="viewer" class="note-form-body"></div>
         </div>
-        <ul class="nav nav-tabs">
+        <ul class="nav nav-tabs toggle-body">
           <li class="active"><a href="#editor" data-toggle="tab">Edit</a></li>
           <li><a href="#viewer" data-toggle="tab">Preview</a></li>
         </ul>

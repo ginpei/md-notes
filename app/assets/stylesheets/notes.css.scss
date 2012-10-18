@@ -70,4 +70,20 @@
     box-sizing: border-box;
     width: 100%;
   }
+
+  .note-form-body-container {
+    margin-bottom: -1px;
+  }
+  .note-form-body {
+    border: solid 1px #ccc;
+    border-radius: 0;
+    height: 400px;
+    display: none;
+    margin-bottom: 0;
+    overflow: auto;
+
+    &.active {
+      display: inherit;
+    }
+  }
 }
