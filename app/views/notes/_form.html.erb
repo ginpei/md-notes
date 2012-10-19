@@ -50,6 +50,9 @@
     <p>
       <%= link_to '&laquo; Back'.html_safe, @note, class: 'btn' %>
       <%= f.submit class: 'btn btn-primary' %>
+      <% if @note.id %>
+        <%= link_to 'Delete', @note, confirm: 'Are you sure?', method: :delete, class: 'btn btn-danger pull-right' %>
+      <% end %>
     </p>
   </div>
 <% end %>
