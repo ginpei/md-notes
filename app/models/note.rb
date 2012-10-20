@@ -11,6 +11,7 @@ class Note < ActiveRecord::Base
 
   SYNTAX_MARKDOWN = 0
   SYNTAX_TEXT = 1
+	FORMAT_MARKDOWN = Note::SYNTAX_MARKDOWN
 
   def self.public
     where("visibility = #{Note::VISIBILITY_PUBLIC}")
