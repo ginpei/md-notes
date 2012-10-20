@@ -39,11 +39,11 @@
         <%= f.label "#{:visibility}_#{Note::VISIBILITY_PRIVATE}", 'Private' %>
       </p>
       <p>
-        Format:
-        <%= f.radio_button :format, Note::FORMAT_MARKDOWN %>
-        <%= f.label "#{:format}_#{Note::FORMAT_MARKDOWN}", 'Markdown Extra' %>
-        <%= f.radio_button :format, Note::FORMAT_TEXT %>
-        <%= f.label "#{:format}_#{Note::FORMAT_TEXT}", 'Plain text' %>
+        Syntax:
+        <%= f.radio_button :syntax, Note::SYNTAX_MARKDOWN %>
+        <%= f.label "#{:syntax}_#{Note::SYNTAX_MARKDOWN}", 'Markdown Extra' %>
+        <%= f.radio_button :syntax, Note::SYNTAX_TEXT %>
+        <%= f.label "#{:syntax}_#{Note::SYNTAX_TEXT}", 'Plain text' %>
       </p>
     </fieldset>
     <hr />

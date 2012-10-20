@@ -1,6 +1,6 @@
 class Note < ActiveRecord::Base
   belongs_to :user
-  attr_accessible :body, :subject, :visibility, :format
+  attr_accessible :body, :subject, :visibility, :syntax
 
   default_scope order: 'updated_at DESC'
   paginates_per 10
@@ -9,8 +9,8 @@ class Note < ActiveRecord::Base
   VISIBILITY_ANYONE = 1
   VISIBILITY_PRIVATE = 0
 
-  FORMAT_MARKDOWN = 0
-  FORMAT_TEXT = 1
+  SYNTAX_MARKDOWN = 0
+  SYNTAX_TEXT = 1
 
   def self.public
     where("visibility = #{Note::VISIBILITY_PUBLIC}")
@@ -27,14 +27,14 @@ class Note < ActiveRecord::Base
   end
 
   def text?
-    self[:format] == Note::FORMAT_TEXT
+    self[:syntax] == Note::SYNTAX_TEXT
   end
 
-  def format_slug
-    case self[:format]
-    when Note::FORMAT_TEXT
+  def syntax_slug
+    case self[:syntax]
+    when Note::SYNTAX_TEXT
       'text'
-    when Note::FORMAT_MARKDOWN
+    when Note::SYNTAX_MARKDOWN
       'markdown'
     end
   end
