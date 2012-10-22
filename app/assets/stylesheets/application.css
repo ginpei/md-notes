@@ -16,6 +16,9 @@
 body {
   font-size: 13px;
 }
+#notice {
+  margin: 10px 20px;
+}
 #main {
   margin: 10px;
 }

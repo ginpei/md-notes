@@ -29,7 +29,9 @@
     ] %>
   </div>
 </div>
-<p id="notice"><%= notice %></p>
+<% if notice %>
+<p id="notice" class="alert alert-info"><%= notice %></p>
+<% end %>
 <div id="main">
 <%= yield %>
 </div>
