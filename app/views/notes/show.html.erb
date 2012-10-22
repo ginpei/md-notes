@@ -1,3 +1,2 @@
 <% content_for :title, "#{@note.subject_to_show} (#{@note.user.account})" %>
-<div><%= link_to '&laquo; Note list'.html_safe, notes_path, class: 'btn' %></div>
 <%= render 'notes/article', note: @note %>
