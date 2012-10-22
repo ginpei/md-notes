@@ -1,2 +1,11 @@
 <h1>MD-Notes</h1>
+<h2>What is this?</h2>
+<p>The note app, you can use Markdown Extra syntax.</p>
+<h2>Get started</h2>
+<p>Click "Sign in &gt; with Twitter" in top header menu, and write notes.</p>
+<h2>I found XSS!</h2>
+<p>Please <%= link_to 'help me', "#{about_path}#contact" %>!!</p>
+<h2>And more informations</h2>
+<p>See <%= link_to 'about page', about_path %>.</p>
+<h2><%= link_to 'Listing notes', notes_path %></h2>
 <%= render 'notes/list' %>

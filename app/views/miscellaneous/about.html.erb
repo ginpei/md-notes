@@ -1,6 +1,11 @@
 <% content_for :title, 'About' %>
 <h1>About MD-Notes</h1>
-<p>You can make notes in Markdown Extra syntax.</p>
+<h2>What is this?</h2>
+<p>The note app, you can use Markdown Extra syntax.</p>
+<h2>Get started</h2>
+<p>Click "Sign in &gt; with Twitter" in top header menu, and write notes.</p>
+<h2>I found XSS!</h2>
+<p>Please <%= link_to 'help me', "#{about_path}#contact" %>!!</p>
 <h2>Syntax</h2>
 <h3>Heading</h3>
 <pre># h1
@@ -35,7 +40,7 @@ with new line</pre>
 &lt;http://wwww.example.com&gt;</pre>
 <h3>And more</h3>
 → <a href="https://www.google.com/search?q=Markdown%20Extra%20syntax">Search in Google</a>
-<h2>Contact</h2>
+<h2 id="contact">Contact</h2>
 <table>
   <tbody>
     <tr>
