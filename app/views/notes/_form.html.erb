@@ -33,8 +33,6 @@
         Visibility:
         <%= f.radio_button :visibility, Note::VISIBILITY_PUBLIC %>
         <%= f.label "#{:visibility}_#{Note::VISIBILITY_PUBLIC}", 'Public' %>
-        <%= f.radio_button :visibility, Note::VISIBILITY_ANYONE %>
-        <%= f.label "#{:visibility}_#{Note::VISIBILITY_ANYONE}", 'Anyone knows URL' %>
         <%= f.radio_button :visibility, Note::VISIBILITY_PRIVATE %>
         <%= f.label "#{:visibility}_#{Note::VISIBILITY_PRIVATE}", 'Private' %>
       </p>
