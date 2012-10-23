@@ -1,4 +1,5 @@
 MdNotes::Application.routes.draw do
+  match '/notes/new_mini' => 'notes#new_mini'
   resources :notes
 
   match '/auth/:provider/callback' => 'sessions#callback'

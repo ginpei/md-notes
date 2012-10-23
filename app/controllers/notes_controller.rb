@@ -37,6 +37,11 @@ class NotesController < ApplicationController
     end
   end
 
+  # GET /notes/new_mini
+  def new_mini
+    @note = current_user.notes.build
+  end
+
   # GET /notes/1/edit
   def edit
     @note = current_user.notes.find(params[:id])
