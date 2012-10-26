@@ -32,10 +32,16 @@ class Note < ActiveRecord::Base
     self[:syntax] == Note::SYNTAX_TEXT
   end
 
+  def sjis_art?
+    self[:syntax] == Note::SYNTAX_SJIS_ART
+  end
+
   def syntax_slug
     case self[:syntax]
     when Note::SYNTAX_TEXT
       'text'
+    when Note::SYNTAX_SJIS_ART
+      'sjis_art'
     when Note::SYNTAX_MARKDOWN
       'markdown'
     end
