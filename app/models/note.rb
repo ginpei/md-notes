@@ -11,6 +11,7 @@ class Note < ActiveRecord::Base
 
   SYNTAX_MARKDOWN = 0
   SYNTAX_TEXT = 1
+  SYNTAX_SJIS_ART = 2
 	FORMAT_MARKDOWN = Note::SYNTAX_MARKDOWN
 
   def self.public

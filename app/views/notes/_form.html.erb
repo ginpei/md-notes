@@ -42,6 +42,8 @@
         <%= f.label "#{:syntax}_#{Note::SYNTAX_MARKDOWN}", 'Markdown Extra' %>
         <%= f.radio_button :syntax, Note::SYNTAX_TEXT %>
         <%= f.label "#{:syntax}_#{Note::SYNTAX_TEXT}", 'Plain text' %>
+        <%= f.radio_button :syntax, Note::SYNTAX_SJIS_ART %>
+        <%= f.label "#{:syntax}_#{Note::SYNTAX_SJIS_ART}", 'Shift_JIS art' %>
       </p>
     </fieldset>
     <hr />
