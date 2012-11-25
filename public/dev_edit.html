@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+	<head>
+		<style>
+html, body {
+	height: 100%;
+	margin: 0;
+}
+.editor {
+	box-sizing: border-box;
+	height: 100%;
+	padding-top: 34px;
+}
+.subject-block {
+	height: 30px;
+	line-height: 30px;
+	padding: 4px 4px 0;
+	margin-top: -34px;
+}
+.subject-block input[name=subject] {
+	box-sizing: border-box;
+	font-size: 20px;
+	height: 100%;
+	width: 100%;
+}
+.body-block {
+	box-sizing: border-box;
+	height: 100%;
+	padding: 4px;
+}
+.body-block textarea {
+	box-sizing: border-box;
+	height: 100%;
+	width: 100%;
+}
+		</style>
+	</head>
+	<body>
+		<form class="editor">
+			<div class="subject-block">
+				<input name="subject" type="text" value="" />
+			</div>
+			<div class="body-block">
+				<textarea name="body"></textarea>
+			</div>
+		</form>
+	</body>
+</html>
