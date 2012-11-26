@@ -14,7 +14,6 @@ jQuery ($) ->
     toggleFormBody $form, id
 
 compileNote = ($input, $output) ->
-  console.log($input, $output)
   source = $input.val()
   if source
     html = removeScripts(Markdown(extendPre(source)))
