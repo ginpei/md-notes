@@ -48,6 +48,14 @@
     background: none transparent;
     font-family: inherit;
   }
+
+  &.note-syntax-sjis_art pre {
+    border-style: none;
+    background: none transparent;
+    font-family: "ＭＳ Ｐゴシック", "Mona", "mona-gothic-jisx0208.1990-0", sans-serif;
+    font-size: 16px;
+    line-height: 18px;
+  }
 }
 
 .form-body {

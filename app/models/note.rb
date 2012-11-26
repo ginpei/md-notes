@@ -11,6 +11,7 @@ class Note < ActiveRecord::Base
 
   SYNTAX_MARKDOWN = 0
   SYNTAX_TEXT = 1
+  SYNTAX_SJIS_ART = 2
 	FORMAT_MARKDOWN = Note::SYNTAX_MARKDOWN
 
   def self.public
@@ -31,10 +32,16 @@ class Note < ActiveRecord::Base
     self[:syntax] == Note::SYNTAX_TEXT
   end
 
+  def sjis_art?
+    self[:syntax] == Note::SYNTAX_SJIS_ART
+  end
+
   def syntax_slug
     case self[:syntax]
     when Note::SYNTAX_TEXT
       'text'
+    when Note::SYNTAX_SJIS_ART
+      'sjis_art'
     when Note::SYNTAX_MARKDOWN
       'markdown'
     end

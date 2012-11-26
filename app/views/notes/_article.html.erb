@@ -10,6 +10,8 @@
   <article class="note-body note-syntax-<%= note.syntax_slug %>">
     <% if note.text? %>
       <pre><%= note.body %></pre>
+    <% elsif note.sjis_art? %>
+      <pre><%= note.body %></pre>
     <% else %>
       <textarea class="note-body-source"><%= note.body %></textarea>
     <% end %>
