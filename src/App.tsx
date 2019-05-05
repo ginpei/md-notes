@@ -1,11 +1,22 @@
 import React from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import AboutPage from './screens/AboutPage';
+import HomePage from './screens/HomePage';
+import NotFoundPage from './screens/NotFoundPage';
 
 const App: React.FC = () => {
   return (
-    <div className="App" style={{ textAlign: 'center' }}>
-      <img src="/icon-512.png" alt="logo" />
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <Switch>
+          <Route path="/" exact component={HomePage} />
+          <Route path="/about" component={AboutPage} />
+          <Route component={NotFoundPage}/>
+        </Switch>
+      </div>
+    </BrowserRouter>
   );
 }
 
 export default App;
+
