@@ -96,7 +96,6 @@ const NoteWritePage: React.FC<INoteWritePageProps> = (props) => {
   };
 
   const onSettingsClick = () => {
-    console.log(`# click`);
     props.history.push('?scene=settings');
   };
 
