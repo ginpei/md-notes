@@ -36,7 +36,7 @@ const ToolbarOuter = styled.div`
   }
 `;
 
-const SettingsDialogOuter = styled.div`
+const DialogOuter = styled.div`
   background-color: #0003;
   height: 100vh;
   left: 0;
@@ -45,11 +45,12 @@ const SettingsDialogOuter = styled.div`
   width: 100vw;
 `;
 
-const SettingsDialogInner = styled.article`
+const DialogInner = styled.article`
   background-color: #fff;
   border-radius: 0.2em;
   height: calc(100% - 2rem);
   left: 1rem;
+  overflow: auto;
   position: absolute;
   top: 1rem;
   width: calc(100% - 2rem);
@@ -87,6 +88,9 @@ const NoteWritePage: React.FC<INoteWritePageProps> = (props) => {
   const params = getGetParams(props.location.search);
   const scene = params['scene'] || '';
 
+  const isPreviewing = scene.startsWith('preview');
+  const isSetting = scene.startsWith('settings-');
+
   const [content, setContent] = useState(initialContent);
 
   const onEditorChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -94,8 +98,12 @@ const NoteWritePage: React.FC<INoteWritePageProps> = (props) => {
     setContent(newContent);
   };
 
+  const onPreviewClick = () => {
+    props.history.push('?scene=preview');
+  };
+
   const onSettingsClick = () => {
-    props.history.push('?scene=settings');
+    props.history.push('?scene=settings-top');
   };
 
   return (
@@ -109,14 +117,23 @@ const NoteWritePage: React.FC<INoteWritePageProps> = (props) => {
         <button># 1</button>
         <button>-</button>
         <button style={{ fontWeight: 'bold' }}>B</button>
+        <button onClick={onPreviewClick}>👁</button>
         <button onClick={onSettingsClick}>…</button>
       </ToolbarOuter>
-      {scene && (
-        <SettingsDialogOuter>
-          <SettingsDialogInner>
-            <h1>Hey</h1>
-          </SettingsDialogInner>
-        </SettingsDialogOuter>
+      {isSetting && (
+        <DialogOuter>
+          <DialogInner>
+            <h1>Settings</h1>
+          </DialogInner>
+        </DialogOuter>
+      )}
+      {isPreviewing && (
+        <DialogOuter>
+          <DialogInner>
+            <h1>Preview</h1>
+            <p>{content}</p>
+          </DialogInner>
+        </DialogOuter>
       )}
     </Outer>
   );
