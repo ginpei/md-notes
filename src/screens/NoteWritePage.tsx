@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { RouteComponentProps } from 'react-router-dom';
+import Dialog from '../independents/Dialog';
 
 const Outer = styled.div`
   background-color: snow;
@@ -34,26 +35,6 @@ const ToolbarOuter = styled.div`
     white-space: nowrap;
     padding: 0;
   }
-`;
-
-const DialogOuter = styled.div`
-  background-color: #0003;
-  height: 100vh;
-  left: 0;
-  position: fixed;
-  top: 0;
-  width: 100vw;
-`;
-
-const DialogInner = styled.article`
-  background-color: #fff;
-  border-radius: 0.2em;
-  height: calc(100% - 2rem);
-  left: 1rem;
-  overflow: auto;
-  position: absolute;
-  top: 1rem;
-  width: calc(100% - 2rem);
 `;
 
 const initialContent = new Array(30)
@@ -121,19 +102,16 @@ const NoteWritePage: React.FC<INoteWritePageProps> = (props) => {
         <button onClick={onSettingsClick}>…</button>
       </ToolbarOuter>
       {isSetting && (
-        <DialogOuter>
-          <DialogInner>
-            <h1>Settings</h1>
-          </DialogInner>
-        </DialogOuter>
+        <Dialog>
+          <h1>Settings</h1>
+          <p>Here comes settings!</p>
+        </Dialog>
       )}
       {isPreviewing && (
-        <DialogOuter>
-          <DialogInner>
-            <h1>Preview</h1>
-            <p>{content}</p>
-          </DialogInner>
-        </DialogOuter>
+        <Dialog>
+          <h1>Preview</h1>
+          <p>{content}</p>
+        </Dialog>
       )}
     </Outer>
   );
