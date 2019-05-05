@@ -1,7 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import AppHeader from './AppHeader';
 import AppFooter from './AppFooter';
+import AppHeader from './AppHeader';
 
 const AppLayout: React.FC = ({ children }) => {
   return (
