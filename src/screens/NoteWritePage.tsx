@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { RouteComponentProps } from 'react-router-dom';
 import Dialog from '../independents/Dialog';
+import { getGetParams } from '../misc';
 
 const Outer = styled.div`
   background-color: snow;
@@ -49,19 +50,6 @@ interface INoteWritePageParams {
 
 type INoteWritePageProps =
   & RouteComponentProps<INoteWritePageParams>;
-
-function getGetParams (search: string): { [key: string]: string } {
-  const pairs = search.slice(1)
-    .split('&')
-    .map((pair) => pair.split('='));
-
-  const map: { [key: string]: string } = {};
-  pairs.forEach(([key, value]) => {
-    map[key] = value;
-  });
-
-  return map;
-}
 
 const NoteWritePage: React.FC<INoteWritePageProps> = (props) => {
   // const noteId = props.match.params.id;
