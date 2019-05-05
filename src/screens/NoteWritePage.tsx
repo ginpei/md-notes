@@ -65,8 +65,8 @@ interface INoteWritePageParams {
   id: string;
 }
 
-interface INoteWritePageProps extends RouteComponentProps<INoteWritePageParams> {
-};
+type INoteWritePageProps =
+  & RouteComponentProps<INoteWritePageParams>;
 
 function getGetParams (search: string): { [key: string]: string } {
   const pairs = search.slice(1)
@@ -82,8 +82,7 @@ function getGetParams (search: string): { [key: string]: string } {
 }
 
 const NoteWritePage: React.FC<INoteWritePageProps> = (props) => {
-  const noteId = props.match.params.id;
-  console.log('# noteId', noteId);
+  // const noteId = props.match.params.id;
 
   const params = getGetParams(props.location.search);
   const scene = params['scene'] || '';
@@ -107,7 +106,7 @@ const NoteWritePage: React.FC<INoteWritePageProps> = (props) => {
       />
       <ToolbarOuter>
         <button>↩</button>
-        <button>#</button>
+        <button># 1</button>
         <button>-</button>
         <button style={{ fontWeight: 'bold' }}>B</button>
         <button onClick={onSettingsClick}>…</button>
