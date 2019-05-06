@@ -82,3 +82,14 @@ export function connectNote(
     },
   );
 }
+
+export function saveNote(
+  note: INote,
+) {
+  const coll = getNoteCollection();
+  const doc = coll.doc(note.id);
+  return doc.set({
+    ...note,
+    updateAt: firebase.firestore.Timestamp.now(),
+  });
+}

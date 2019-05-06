@@ -6,7 +6,7 @@ import Dialog from '../independents/Dialog';
 import { BackLink } from '../independents/miscComponents';
 import firebase from '../middleware/firebase';
 import { getGetParams } from '../misc';
-import { connectNote, INote } from '../models/Notes';
+import { connectNote, INote, saveNote } from '../models/Notes';
 import NotFoundPage from './NotFoundPage';
 
 const Outer = styled.div`
@@ -71,15 +71,21 @@ const NoteWritePage: React.FC<INoteWritePageProps> = (props) => {
       return noop;
     }
 
-    return connectNote(
+    const disconnect = connectNote(
       noteId,
       (note) => {
-        setNote(note);
+        // ignore when user updates the data on client side
+        if (initialized) {
+          return;
+        }
+
         setContent(note ? note.body : '');
+        setNote(note);
         setInitialized(true);
       },
     );
-  }, [user, noteId]);
+    return disconnect;
+  }, [user, noteId, initialized]);
 
   const [content, setContent] = useState('');
 
@@ -88,19 +94,6 @@ const NoteWritePage: React.FC<INoteWritePageProps> = (props) => {
 
   const isPreviewing = scene.startsWith('preview');
   const isSetting = scene.startsWith('settings-');
-
-  const onEditorChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const newContent = event.currentTarget.value;
-    setContent(newContent);
-  };
-
-  const onPreviewClick = () => {
-    props.history.push('?scene=preview');
-  };
-
-  const onSettingsClick = () => {
-    props.history.push('?scene=settings-top');
-  };
 
   if (!initialized) {
     return (
@@ -117,6 +110,23 @@ const NoteWritePage: React.FC<INoteWritePageProps> = (props) => {
       <NotFoundPage/>
     );
   }
+
+  const onEditorChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const newContent = event.currentTarget.value;
+    setContent(newContent);
+    saveNote({
+      ...note,
+      body: newContent,
+    });
+  };
+
+  const onPreviewClick = () => {
+    props.history.push('?scene=preview');
+  };
+
+  const onSettingsClick = () => {
+    props.history.push('?scene=settings-top');
+  };
 
   return (
     <Outer>
