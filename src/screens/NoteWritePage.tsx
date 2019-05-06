@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import { Link, RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
-import { RouteComponentProps } from 'react-router-dom';
 import Dialog from '../independents/Dialog';
+import { BackLink } from '../independents/miscComponents';
 import { getGetParams } from '../misc';
 
 const Outer = styled.div`
@@ -90,10 +91,22 @@ const NoteWritePage: React.FC<INoteWritePageProps> = (props) => {
         <button onClick={onSettingsClick}>…</button>
       </ToolbarOuter>
       {isSetting && (
-        <Dialog>
-          <h1>Settings</h1>
-          <p>Here comes settings!</p>
-        </Dialog>
+        scene === 'settings-heyYo' ? (
+          <Dialog>
+            <h1>Hey Yo!</h1>
+            <p>
+              <BackLink history={props.history}>← Back</BackLink>
+            </p>
+          </Dialog>
+        ) : (
+          <Dialog>
+            <h1>Settings</h1>
+            <p>Here comes settings!</p>
+            <p>
+              <Link to="?scene=settings-heyYo">Hey Yo</Link>
+            </p>
+          </Dialog>
+        )
       )}
       {isPreviewing && (
         <Dialog>

@@ -1,6 +1,9 @@
 html {
+  --color-link: #00f;
+
   font-size: 16px;
 }
+
 body {
   margin: 0;
   padding: 0;
@@ -15,4 +18,11 @@ body {
   margin: auto;
   max-width: calc(800px - 2rem);
   padding: 0 1rem;
+}
+
+:any-link,
+.link {
+  color: var(--color-link);
+  cursor: pointer;
+  text-decoration: underline;
 }
