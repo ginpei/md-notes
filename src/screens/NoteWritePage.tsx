@@ -1,3 +1,4 @@
+import NiceMarkdown from '@ginpei/react-nice-markdown';
 import React, { useEffect, useState } from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
@@ -7,9 +8,6 @@ import firebase from '../middleware/firebase';
 import { getGetParams, noop } from '../misc';
 import { connectNote, INote, now, saveNote } from '../models/Notes';
 import NotFoundPage from './NotFoundPage';
-
-// type definition is not ready
-const NiceMarkdown = require('@ginpei/react-nice-markdown');
 
 const Outer = styled.div`
   background-color: snow;
