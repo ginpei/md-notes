@@ -35,8 +35,8 @@ const App: React.FC = () => {
           <Route path="/" exact component={HomePage} />
           <Route path="/about" component={AboutPage} />
           {user && <>
+            <Route path="/notes" exact component={NoteListPage} />
             <Route path="/notes/:id/write" component={NoteWritePage} />
-            <Route path="/notes" component={NoteListPage} />
           </>}
           <Route component={NotFoundPage}/>
         </Switch>

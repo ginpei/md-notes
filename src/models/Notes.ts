@@ -9,8 +9,19 @@ export interface INote {
 
 export function snapshotToNote (
   s: firebase.firestore.QueryDocumentSnapshot,
-): INote {
+): INote;
+export function snapshotToNote (
+  s: firebase.firestore.DocumentSnapshot,
+): INote | null;
+export function snapshotToNote (
+  s: firebase.firestore.QueryDocumentSnapshot | firebase.firestore.DocumentSnapshot,
+): INote | null {
   const data = s.data();
+
+  if (!data) {
+    console.warn('Invalid note', s.id);
+    throw new Error('This note is gone');
+  }
 
   if (!data.userId) {
     console.warn('Invalid note', data);
@@ -42,6 +53,28 @@ export function connectUserNotes(
     (snapshot) => {
       const notes = snapshot.docs.map((v) => snapshotToNote(v));
       onNext(notes);
+      onAny();
+    },
+    (error) => {
+      onError(error);
+      onAny();
+    },
+  );
+}
+
+export function connectNote(
+  firestore: firebase.firestore.Firestore,
+  noteId: string,
+  onNext: (note: INote | null) => void,
+  onError: (error: Error) => void = noop,
+  onAny: () => void = noop,
+) {
+  const ref = getNoteCollection(firestore);
+  const query = ref.doc(noteId);
+  return query.onSnapshot(
+    (snapshot) => {
+      const note = snapshotToNote(snapshot);
+      onNext(note);
       onAny();
     },
     (error) => {

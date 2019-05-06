@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import { noop } from '@babel/types';
+import React, { useEffect, useState } from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
 import Dialog from '../independents/Dialog';
 import { BackLink } from '../independents/miscComponents';
+import firebase from '../middleware/firebase';
 import { getGetParams } from '../misc';
+import { connectNote, INote } from '../models/Notes';
+import NotFoundPage from './NotFoundPage';
 
 const Outer = styled.div`
   background-color: snow;
@@ -39,12 +43,6 @@ const ToolbarOuter = styled.div`
   }
 `;
 
-const initialContent = new Array(30)
-.fill(`Lorem ipsum dolor sit amet consectetur adipisicing elit.
-
-Quibusdam sapiente quis voluptates non odit veniam laboriosam doloribus repudiandae suscipit officiis voluptatem eaque sit pariatur, architecto nostrum exercitationem est dignissimos odio.`)
-.join('\n\n');
-
 interface INoteWritePageParams {
   id: string;
 }
@@ -53,15 +51,44 @@ type INoteWritePageProps =
   & RouteComponentProps<INoteWritePageParams>;
 
 const NoteWritePage: React.FC<INoteWritePageProps> = (props) => {
-  // const noteId = props.match.params.id;
+  const noteId = props.match.params.id;
+
+  const [initialized, setInitialized] = useState(false);
+
+  const [user, setUser] = useState(firebase.auth().currentUser);
+  useEffect(() => {
+    const auth = firebase.auth();
+    return auth.onAuthStateChanged((user) => {
+      setUser(user);
+    });
+  }, []);
+
+  const [note, setNote] = useState<INote | null>(null);
+  useEffect(() => {
+    if (!user) {
+      setNote(null);
+      setInitialized(true);
+      return noop;
+    }
+
+    return connectNote(
+      firebase.firestore(),
+      noteId,
+      (note) => {
+        setNote(note);
+        setContent(note ? note.body : '');
+        setInitialized(true);
+      },
+    );
+  }, [user, noteId]);
+
+  const [content, setContent] = useState('');
 
   const params = getGetParams(props.location.search);
   const scene = params['scene'] || '';
 
   const isPreviewing = scene.startsWith('preview');
   const isSetting = scene.startsWith('settings-');
-
-  const [content, setContent] = useState(initialContent);
 
   const onEditorChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newContent = event.currentTarget.value;
@@ -75,6 +102,22 @@ const NoteWritePage: React.FC<INoteWritePageProps> = (props) => {
   const onSettingsClick = () => {
     props.history.push('?scene=settings-top');
   };
+
+  if (!initialized) {
+    return (
+      <div>
+        🥚
+        🐣
+        🐥
+      </div>
+    );
+  }
+
+  if (!note) {
+    return (
+      <NotFoundPage/>
+    );
+  }
 
   return (
     <Outer>
