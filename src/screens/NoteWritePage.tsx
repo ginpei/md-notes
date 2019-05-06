@@ -6,8 +6,11 @@ import Dialog from '../independents/Dialog';
 import { BackLink } from '../independents/miscComponents';
 import firebase from '../middleware/firebase';
 import { getGetParams } from '../misc';
-import { connectNote, INote, saveNote, now } from '../models/Notes';
+import { connectNote, INote, now, saveNote } from '../models/Notes';
 import NotFoundPage from './NotFoundPage';
+
+// type definition is not ready
+const NiceMarkdown = require('@ginpei/react-nice-markdown');
 
 const Outer = styled.div`
   background-color: snow;
@@ -163,7 +166,7 @@ const NoteWritePage: React.FC<INoteWritePageProps> = (props) => {
       {isPreviewing && (
         <Dialog>
           <h1>Preview</h1>
-          <pre>{content}</pre>
+          <NiceMarkdown content={content} />
         </Dialog>
       )}
     </Outer>

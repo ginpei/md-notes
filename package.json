@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ginpei/react-nice-markdown": "github:ginpei/react-nice-markdown#v0.0.1",
     "@types/jest": "24.0.12",
     "@types/node": "12.0.0",
     "@types/react": "16.8.16",
