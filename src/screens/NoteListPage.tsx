@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import AppLayout from '../independents/AppLayout';
 import firebase from '../middleware/firebase';
-import { getNoteCollection, INote, snapshotToNote, connectUserNotes } from '../models/Notes';
+import { connectUserNotes, INote } from '../models/Notes';
 
 type INoteWritePageProps = {};
 
