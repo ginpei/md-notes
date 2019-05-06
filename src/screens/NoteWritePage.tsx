@@ -1,11 +1,10 @@
-import { noop } from '@babel/types';
 import React, { useEffect, useState } from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
 import Dialog from '../independents/Dialog';
 import { BackLink } from '../independents/miscComponents';
 import firebase from '../middleware/firebase';
-import { getGetParams } from '../misc';
+import { getGetParams, noop } from '../misc';
 import { connectNote, INote, now, saveNote } from '../models/Notes';
 import NotFoundPage from './NotFoundPage';
 
@@ -85,8 +84,9 @@ const NoteWritePage: React.FC<INoteWritePageProps> = (props) => {
 
         setContent(note ? note.body : '');
         setNote(note);
-        setInitialized(true);
       },
+      noop,
+      () => setInitialized(true),
     );
     return disconnect;
   }, [user, noteId, initialized]);

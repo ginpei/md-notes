@@ -1,5 +1,5 @@
-import { noop } from "@babel/types";
 import firebase from "../middleware/firebase";
+import { noop } from "../misc";
 
 export interface INote {
   body: string;

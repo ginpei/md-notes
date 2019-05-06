@@ -15,3 +15,5 @@ export function getGetParams (search: string): { [key: string]: string } {
 
   return map;
 }
+
+export const noop: () => void = () => {};

@@ -1,9 +1,9 @@
-import { noop } from '@babel/types';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import AppLayout from '../independents/AppLayout';
 import firebase from '../middleware/firebase';
 import { connectUserNotes, INote } from '../models/Notes';
+import { noop } from '../misc';
 
 type INoteWritePageProps = {};
 
