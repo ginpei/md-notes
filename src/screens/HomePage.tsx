@@ -9,9 +9,10 @@ const HomePage: React.FC = () => {
       <div style={{ textAlign: 'center' }}>
         <img src="/icon-512.png" alt="logo" width="256" height="256" />
       </div>
-      <p>
-        <Link to="/notes/12/write">Write a note</Link>
-      </p>
+      <ul>
+        <li><Link to="/notes">Note list</Link></li>
+        <li><Link to="/notes/12/write">Write a note</Link></li>
+      </ul>
     </AppLayout>
   );
 }

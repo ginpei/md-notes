@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import firebase from './middleware/firebase';
 import AboutPage from './screens/AboutPage';
 import HomePage from './screens/HomePage';
+import NoteListPage from './screens/NoteListPage';
 import NoteWritePage from './screens/NoteWritePage';
 import NotFoundPage from './screens/NotFoundPage';
 
@@ -33,11 +34,10 @@ const App: React.FC = () => {
         <Switch>
           <Route path="/" exact component={HomePage} />
           <Route path="/about" component={AboutPage} />
-          {user && (
-            <>
-              <Route path="/notes/:id/write" component={NoteWritePage} />
-            </>
-          )}
+          {user && <>
+            <Route path="/notes/:id/write" component={NoteWritePage} />
+            <Route path="/notes" component={NoteListPage} />
+          </>}
           <Route component={NotFoundPage}/>
         </Switch>
       </div>
