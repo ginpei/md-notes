@@ -6,7 +6,7 @@ import Dialog from '../independents/Dialog';
 import { BackLink } from '../independents/miscComponents';
 import firebase from '../middleware/firebase';
 import { getGetParams } from '../misc';
-import { connectNote, INote, saveNote } from '../models/Notes';
+import { connectNote, INote, saveNote, now } from '../models/Notes';
 import NotFoundPage from './NotFoundPage';
 
 const Outer = styled.div`
@@ -116,6 +116,7 @@ const NoteWritePage: React.FC<INoteWritePageProps> = (props) => {
     saveNote({
       ...note,
       body: newContent,
+      updatedAt: now(),
     });
   };
 

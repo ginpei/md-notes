@@ -5,6 +5,7 @@ export interface INote {
   body: string;
   id: string;
   title: string;
+  updatedAt: firebase.firestore.Timestamp;
   userId: string;
 }
 
@@ -33,6 +34,7 @@ export function snapshotToNote (
     body: data.body || '',
     id: s.id,
     title: data.title || '',
+    updatedAt: data.updatedAt,
     userId: data.userId,
   };
 }
@@ -83,13 +85,12 @@ export function connectNote(
   );
 }
 
-export function saveNote(
-  note: INote,
-) {
+export function saveNote(note: INote) {
   const coll = getNoteCollection();
   const doc = coll.doc(note.id);
-  return doc.set({
-    ...note,
-    updateAt: firebase.firestore.Timestamp.now(),
-  });
+  return doc.set(note);
+}
+
+export function now () {
+  return firebase.firestore.Timestamp.now();
 }
