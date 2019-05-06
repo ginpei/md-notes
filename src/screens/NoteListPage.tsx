@@ -3,29 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import AppLayout from '../independents/AppLayout';
 import firebase from '../middleware/firebase';
-
-interface INote {
-  body: string;
-  id: string;
-  title: string;
-  userId: string;
-}
-
-function snapshotToNote (s: firebase.firestore.QueryDocumentSnapshot): INote {
-  const data = s.data();
-
-  if (!data.userId) {
-    console.warn('Invalid note', data);
-    throw new Error('Invalid note');
-  }
-
-  return {
-    body: data.body || '',
-    id: s.id,
-    title: data.title || '',
-    userId: data.userId,
-  };
-}
+import { getNoteCollection, INote, snapshotToNote, connectUserNotes } from '../models/Notes';
 
 type INoteWritePageProps = {};
 
@@ -48,11 +26,10 @@ const NoteListPage: React.FC<INoteWritePageProps> = (props) => {
       return noop;
     }
 
-    const firestore = firebase.firestore();
-    const collNotes = firestore.collection('notes');
-    return collNotes.where('userId', '==', user.uid).onSnapshot(
-      (snapshot) => {
-        const notes = snapshot.docs.map((v) => snapshotToNote(v));
+    return connectUserNotes(
+      firebase.firestore(),
+      user.uid,
+      (notes) => {
         setNotes(notes);
         setInitialized(true);
       },
