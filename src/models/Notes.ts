@@ -1,4 +1,5 @@
 import { noop } from "@babel/types";
+import firebase from "../middleware/firebase";
 
 export interface INote {
   body: string;
@@ -36,18 +37,17 @@ export function snapshotToNote (
   };
 }
 
-export function getNoteCollection (firestore: firebase.firestore.Firestore) {
-  return firestore.collection('notes');
+export function getNoteCollection () {
+  return firebase.firestore().collection('notes');
 }
 
 export function connectUserNotes(
-  firestore: firebase.firestore.Firestore,
   userId: string,
   onNext: (notes: INote[]) => void,
   onError: (error: Error) => void = noop,
   onAny: () => void = noop,
 ) {
-  const ref = getNoteCollection(firestore);
+  const ref = getNoteCollection();
   const query = ref.where('userId', '==', userId);
   return query.onSnapshot(
     (snapshot) => {
@@ -63,13 +63,12 @@ export function connectUserNotes(
 }
 
 export function connectNote(
-  firestore: firebase.firestore.Firestore,
   noteId: string,
   onNext: (note: INote | null) => void,
   onError: (error: Error) => void = noop,
   onAny: () => void = noop,
 ) {
-  const ref = getNoteCollection(firestore);
+  const ref = getNoteCollection();
   const query = ref.doc(noteId);
   return query.onSnapshot(
     (snapshot) => {

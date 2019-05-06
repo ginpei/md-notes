@@ -72,7 +72,6 @@ const NoteWritePage: React.FC<INoteWritePageProps> = (props) => {
     }
 
     return connectNote(
-      firebase.firestore(),
       noteId,
       (note) => {
         setNote(note);

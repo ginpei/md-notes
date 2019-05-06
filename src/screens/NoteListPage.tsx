@@ -27,7 +27,6 @@ const NoteListPage: React.FC<INoteWritePageProps> = (props) => {
     }
 
     return connectUserNotes(
-      firebase.firestore(),
       user.uid,
       (notes) => {
         setNotes(notes);
