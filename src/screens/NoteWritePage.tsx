@@ -53,9 +53,11 @@ type INoteWritePageProps =
 const NoteWritePage: React.FC<INoteWritePageProps> = (props) => {
   const noteId = props.match.params.id;
 
+  const [content, setContent] = useState('');
   const [initialized, setInitialized] = useState(false);
-
+  const [note, setNote] = useState<INote | null>(null);
   const [user, setUser] = useState(firebase.auth().currentUser);
+
   useEffect(() => {
     const auth = firebase.auth();
     return auth.onAuthStateChanged((user) => {
@@ -63,7 +65,6 @@ const NoteWritePage: React.FC<INoteWritePageProps> = (props) => {
     });
   }, []);
 
-  const [note, setNote] = useState<INote | null>(null);
   useEffect(() => {
     if (!user) {
       setNote(null);
@@ -86,8 +87,6 @@ const NoteWritePage: React.FC<INoteWritePageProps> = (props) => {
     );
     return disconnect;
   }, [user, noteId, initialized]);
-
-  const [content, setContent] = useState('');
 
   const params = getGetParams(props.location.search);
   const scene = params['scene'] || '';
