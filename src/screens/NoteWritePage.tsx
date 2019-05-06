@@ -98,7 +98,7 @@ const NoteWritePage: React.FC<INoteWritePageProps> = (props) => {
       {isPreviewing && (
         <Dialog>
           <h1>Preview</h1>
-          <p>{content}</p>
+          <pre>{content}</pre>
         </Dialog>
       )}
     </Outer>
