@@ -7,7 +7,7 @@ import Dialog from '../independents/Dialog';
 import { BackLink } from '../independents/miscComponents';
 import firebase from '../middleware/firebase';
 import { getGetParams, noop } from '../misc';
-import { acCacheNote, connectNote, INote, now, saveNote } from '../models/Notes';
+import { acCacheNote, connectNote, Note, now, saveNote } from '../models/Notes';
 import { AppDispatch, AppState } from '../models/store';
 import NotFoundPage from './NotFoundPage';
 
@@ -45,32 +45,32 @@ const ToolbarOuter = styled.div`
   }
 `;
 
-interface INoteWritePageParams {
+interface PageParams {
   id: string;
 }
 
-interface INoteWritePageStateProps {
-  note: INote;
+interface StateProps {
+  note: Note;
 }
 
-const mapStateToProps = ({ notes }: AppState, props: INoteWritePageProps): INoteWritePageStateProps => ({
+const mapState = ({ notes }: AppState, props: PageProps): StateProps => ({
   note: notes.docs[props.match.params.id],
 });
 
-interface INoteWritePageDispatchProps {
-  cacheNote: (note: INote) => void;
+interface DispatchProps {
+  cacheNote: (note: Note) => void;
 }
 
-const mapDispatchToProps = (dispatch: AppDispatch): INoteWritePageDispatchProps => ({
+const mapDispatch = (dispatch: AppDispatch): DispatchProps => ({
   cacheNote: (note) => dispatch(acCacheNote(note)),
 });
 
-type INoteWritePageProps =
-  & RouteComponentProps<INoteWritePageParams>
-  & INoteWritePageStateProps
-  & INoteWritePageDispatchProps;
+type PageProps =
+  & RouteComponentProps<PageParams>
+  & StateProps
+  & DispatchProps;
 
-const NoteWritePage: React.FC<INoteWritePageProps> = (props) => {
+const NoteWritePage: React.FC<PageProps> = (props) => {
   const noteId = props.match.params.id;
   const { note } = props;
 
@@ -192,4 +192,4 @@ const NoteWritePage: React.FC<INoteWritePageProps> = (props) => {
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NoteWritePage);
+export default connect(mapState, mapDispatch)(NoteWritePage);

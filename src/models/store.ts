@@ -1,11 +1,11 @@
 import { createStore, combineReducers, Dispatch } from "redux";
-import { NoteAction, INoteState, reduceNotes } from "./Notes";
+import { NoteAction, NoteState, reduceNotes } from "./Notes";
 
 export type AppAction =
   | NoteAction;
 export type AppDispatch = Dispatch<AppAction>;
 export type AppState = {
-  notes: INoteState;
+  notes: NoteState;
 };
 
 export function createAppStore () {

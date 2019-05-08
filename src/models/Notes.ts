@@ -2,7 +2,7 @@ import firebase from "../middleware/firebase";
 import { noop } from "../misc";
 import { Reducer } from "redux";
 
-export interface INote {
+export interface Note {
   body: string;
   id: string;
   title: string;
@@ -12,13 +12,13 @@ export interface INote {
 
 export function snapshotToNote (
   s: firebase.firestore.QueryDocumentSnapshot,
-): INote;
+): Note;
 export function snapshotToNote (
   s: firebase.firestore.DocumentSnapshot,
-): INote | null;
+): Note | null;
 export function snapshotToNote (
   s: firebase.firestore.QueryDocumentSnapshot | firebase.firestore.DocumentSnapshot,
-): INote | null {
+): Note | null {
   const data = s.data();
 
   if (!data) {
@@ -46,7 +46,7 @@ export function getNoteCollection () {
 
 export function connectUserNotes(
   userId: string,
-  onNext: (notes: INote[]) => void,
+  onNext: (notes: Note[]) => void,
   onError: (error: Error) => void = noop,
   onAny: () => void = noop,
 ) {
@@ -67,7 +67,7 @@ export function connectUserNotes(
 
 export function connectNote(
   noteId: string,
-  onNext: (note: INote | null) => void,
+  onNext: (note: Note | null) => void,
   onError: (error: Error) => void = noop,
   onAny: () => void = noop,
 ) {
@@ -86,7 +86,7 @@ export function connectNote(
   );
 }
 
-export function saveNote(note: INote) {
+export function saveNote(note: Note) {
   const coll = getNoteCollection();
   const doc = coll.doc(note.id);
   return doc.set(note);
@@ -96,38 +96,38 @@ export function now () {
   return firebase.firestore.Timestamp.now();
 }
 
-export interface INoteDocs {
-  [id: string]: INote;
+export interface NoteDocs {
+  [id: string]: Note;
 }
 
-export interface INoteState {
-  docs: INoteDocs;
+export interface NoteState {
+  docs: NoteDocs;
   userNoteIds: string[];
 }
 
-const initialState: INoteState = {
+const initialState: NoteState = {
   docs: {},
   userNoteIds: [],
 };
 
-interface ICacheNoteAction {
-  note: INote;
+interface CacheNoteAction {
+  note: Note;
   type: 'notes/cache';
 };
 
-export function acCacheNote (note: INote): ICacheNoteAction {
+export function acCacheNote (note: Note): CacheNoteAction {
   return {
     note,
     type: 'notes/cache',
   };
 };
 
-interface ISetUserNotesAction {
-  notes: INote[];
+interface SetUserNotesAction {
+  notes: Note[];
   type: 'notes/SetUserNotes';
 };
 
-export function acSetUserNotes (notes: INote[]): ISetUserNotesAction {
+export function acSetUserNotes (notes: Note[]): SetUserNotesAction {
   return {
     notes,
     type: 'notes/SetUserNotes',
@@ -135,10 +135,10 @@ export function acSetUserNotes (notes: INote[]): ISetUserNotesAction {
 };
 
 export type NoteAction =
-  | ICacheNoteAction
-  | ISetUserNotesAction;
+  | CacheNoteAction
+  | SetUserNotesAction;
 
-const reduceDocs: Reducer<INoteDocs, NoteAction> = (state = {}, action) => {
+const reduceDocs: Reducer<NoteDocs, NoteAction> = (state = {}, action) => {
   switch (action.type) {
     case 'notes/cache':
       return {
@@ -158,7 +158,7 @@ const reduceDocs: Reducer<INoteDocs, NoteAction> = (state = {}, action) => {
 }
 
 export const reduceNotes: Reducer<
-  INoteState,
+  NoteState,
   NoteAction
 > = (state = initialState, action) => {
   switch (action.type) {

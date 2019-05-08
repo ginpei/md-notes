@@ -4,32 +4,32 @@ import { Link } from 'react-router-dom';
 import AppLayout from '../independents/AppLayout';
 import firebase from '../middleware/firebase';
 import { noop } from '../misc';
-import { acCacheNote, connectUserNotes, INote, INoteDocs, acSetUserNotes } from '../models/Notes';
+import { acCacheNote, acSetUserNotes, connectUserNotes, Note } from '../models/Notes';
 import { AppDispatch, AppState } from '../models/store';
 
-interface INoteWritePageStateProps {
-  notes: INote[];
+interface StateProps {
+  notes: Note[];
 }
 
-const mapStateToProps = ({ notes }: AppState): INoteWritePageStateProps => ({
+const mapState = ({ notes }: AppState): StateProps => ({
   notes: notes.userNoteIds.map((id) => notes.docs[id]),
 });
 
-interface INoteWritePageDispatchProps {
-  cacheNote: (note: INote) => void;
-  setUserNotes: (notes: INote[]) => void;
+interface DispatchProps {
+  cacheNote: (note: Note) => void;
+  setUserNotes: (notes: Note[]) => void;
 }
 
-const mapDispatchToProps = (dispatch: AppDispatch): INoteWritePageDispatchProps => ({
+const mapDispatchToProps = (dispatch: AppDispatch): DispatchProps => ({
   cacheNote: (note) => dispatch(acCacheNote(note)),
   setUserNotes: (notes) => dispatch(acSetUserNotes(notes)),
 });
 
-type INoteWritePageProps =
-  & INoteWritePageStateProps
-  & INoteWritePageDispatchProps;
+type PageProps =
+  & StateProps
+  & DispatchProps;
 
-const NoteListPage: React.FC<INoteWritePageProps> = (props) => {
+const NoteListPage: React.FC<PageProps> = (props) => {
   const [initialized, setInitialized] = useState(props.notes.length > 0);
 
   const [user, setUser] = useState(firebase.auth().currentUser);
@@ -84,4 +84,4 @@ const NoteListPage: React.FC<INoteWritePageProps> = (props) => {
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NoteListPage);
+export default connect(mapState, mapDispatchToProps)(NoteListPage);
