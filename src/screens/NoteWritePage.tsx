@@ -1,12 +1,14 @@
 import NiceMarkdown from '@ginpei/react-nice-markdown';
 import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
 import Dialog from '../independents/Dialog';
 import { BackLink } from '../independents/miscComponents';
 import firebase from '../middleware/firebase';
 import { getGetParams, noop } from '../misc';
-import { connectNote, INote, now, saveNote } from '../models/Notes';
+import { acCacheNote, connectNote, INote, now, saveNote } from '../models/Notes';
+import { AppDispatch, AppState } from '../models/store';
 import NotFoundPage from './NotFoundPage';
 
 const Outer = styled.div`
@@ -47,15 +49,33 @@ interface INoteWritePageParams {
   id: string;
 }
 
+interface INoteWritePageStateProps {
+  note: INote;
+}
+
+const mapStateToProps = ({ notes }: AppState, props: INoteWritePageProps): INoteWritePageStateProps => ({
+  note: notes.docs[props.match.params.id],
+});
+
+interface INoteWritePageDispatchProps {
+  cacheNote: (note: INote) => void;
+}
+
+const mapDispatchToProps = (dispatch: AppDispatch): INoteWritePageDispatchProps => ({
+  cacheNote: (note) => dispatch(acCacheNote(note)),
+});
+
 type INoteWritePageProps =
-  & RouteComponentProps<INoteWritePageParams>;
+  & RouteComponentProps<INoteWritePageParams>
+  & INoteWritePageStateProps
+  & INoteWritePageDispatchProps;
 
 const NoteWritePage: React.FC<INoteWritePageProps> = (props) => {
   const noteId = props.match.params.id;
+  const { note } = props;
 
-  const [content, setContent] = useState('');
-  const [initialized, setInitialized] = useState(false);
-  const [note, setNote] = useState<INote | null>(null);
+  const [content, setContent] = useState(note ? note.body : '');
+  const [initialized, setInitialized] = useState(Boolean(note));
   const [user, setUser] = useState(firebase.auth().currentUser);
 
   useEffect(() => {
@@ -67,7 +87,6 @@ const NoteWritePage: React.FC<INoteWritePageProps> = (props) => {
 
   useEffect(() => {
     if (!user) {
-      setNote(null);
       setInitialized(true);
       return noop;
     }
@@ -80,8 +99,10 @@ const NoteWritePage: React.FC<INoteWritePageProps> = (props) => {
           return;
         }
 
-        setContent(note ? note.body : '');
-        setNote(note);
+        if (note) {
+          props.cacheNote(note);
+          setContent(note.body);
+        }
       },
       noop,
       () => setInitialized(true),
@@ -171,4 +192,4 @@ const NoteWritePage: React.FC<INoteWritePageProps> = (props) => {
   );
 }
 
-export default NoteWritePage;
+export default connect(mapStateToProps, mapDispatchToProps)(NoteWritePage);
