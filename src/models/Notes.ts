@@ -1,5 +1,6 @@
 import firebase from "../middleware/firebase";
 import { noop } from "../misc";
+import { Reducer } from "redux";
 
 export interface INote {
   body: string;
@@ -93,4 +94,86 @@ export function saveNote(note: INote) {
 
 export function now () {
   return firebase.firestore.Timestamp.now();
+}
+
+export interface INoteDocs {
+  [id: string]: INote;
+}
+
+export interface INoteState {
+  docs: INoteDocs;
+  userNoteIds: string[];
+}
+
+const initialState: INoteState = {
+  docs: {},
+  userNoteIds: [],
+};
+
+interface ICacheNoteAction {
+  note: INote;
+  type: 'notes/cache';
+};
+
+export function acCacheNote (note: INote): ICacheNoteAction {
+  return {
+    note,
+    type: 'notes/cache',
+  };
+};
+
+interface ISetUserNotesAction {
+  notes: INote[];
+  type: 'notes/SetUserNotes';
+};
+
+export function acSetUserNotes (notes: INote[]): ISetUserNotesAction {
+  return {
+    notes,
+    type: 'notes/SetUserNotes',
+  };
+};
+
+export type NoteAction =
+  | ICacheNoteAction
+  | ISetUserNotesAction;
+
+const reduceDocs: Reducer<INoteDocs, NoteAction> = (state = {}, action) => {
+  switch (action.type) {
+    case 'notes/cache':
+      return {
+        ...state,
+        [action.note.id]: action.note,
+      };
+    case 'notes/SetUserNotes': {
+      const docs = { ...state };
+      action.notes.forEach((note) => {
+        docs[note.id] = note;
+      });
+      return docs;
+    }
+    default:
+      return state;
+  }
+}
+
+export const reduceNotes: Reducer<
+  INoteState,
+  NoteAction
+> = (state = initialState, action) => {
+  switch (action.type) {
+    case 'notes/cache':
+      return {
+        ...state,
+        docs: reduceDocs(state.docs, action),
+      };
+    case 'notes/SetUserNotes':
+      return {
+        ...state,
+        docs: reduceDocs(state.docs, action),
+        userNoteIds: action.notes.map((v) => v.id),
+      };
+    default:
+      return state;
+  }
 }

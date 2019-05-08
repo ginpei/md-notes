@@ -6,10 +6,14 @@ import HomePage from './screens/HomePage';
 import NoteListPage from './screens/NoteListPage';
 import NoteWritePage from './screens/NoteWritePage';
 import NotFoundPage from './screens/NotFoundPage';
+import { createAppStore } from './models/store';
+import { Provider } from 'react-redux';
 
 const App: React.FC = () => {
   const [initialized, setInitialized] = useState(false);
   const [user, setUser] = useState<firebase.User | null>(null);
+  const [store] = useState(createAppStore());
+
   useEffect(() => {
     const auth = firebase.auth();
     return auth.onAuthStateChanged((currentUser) => {
@@ -29,19 +33,21 @@ const App: React.FC = () => {
   }
 
   return (
-    <BrowserRouter>
-      <div className="App">
-        <Switch>
-          <Route path="/" exact component={HomePage} />
-          <Route path="/about" component={AboutPage} />
-          {user && <>
-            <Route path="/notes" exact component={NoteListPage} />
-            <Route path="/notes/:id/write" component={NoteWritePage} />
-          </>}
-          <Route component={NotFoundPage}/>
-        </Switch>
-      </div>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <div className="App">
+          <Switch>
+            <Route path="/" exact component={HomePage} />
+            <Route path="/about" component={AboutPage} />
+            {user && <>
+              <Route path="/notes" exact component={NoteListPage} />
+              <Route path="/notes/:id/write" component={NoteWritePage} />
+            </>}
+            <Route component={NotFoundPage}/>
+          </Switch>
+        </div>
+      </BrowserRouter>
+    </Provider>
   );
 }
 
