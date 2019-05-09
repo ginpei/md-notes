@@ -1,7 +1,7 @@
 import NiceMarkdown from '@ginpei/react-nice-markdown';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { RouteComponentProps } from 'react-router-dom';
+import { Link, RouteComponentProps } from 'react-router-dom';
 import AppLayout from '../independents/AppLayout';
 import { noop } from '../misc';
 import { acCacheNote, connectNote, Note, notePath } from '../models/Notes';
@@ -66,18 +66,10 @@ const NoteWritePage: React.FC<PageProps> = (props) => {
     );
   }
 
-  const onWriteClick = () => {
-    props.history.push(notePath(note, 'write'));
-  };
-
   return (
     <AppLayout>
       <p>
-        <button
-          onClick={onWriteClick}
-        >
-          Write
-        </button>
+        <Link to={notePath(note, 'write')}>Write</Link>
       </p>
       <hr/>
       <NiceMarkdown content={note.body} />
