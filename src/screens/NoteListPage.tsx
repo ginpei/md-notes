@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, RouteComponentProps } from 'react-router-dom';
 import AppLayout from '../independents/AppLayout';
 import firebase from '../middleware/firebase';
 import { noop } from '../misc';
-import { acCacheNote, acSetUserNotes, connectUserNotes, Note } from '../models/Notes';
+import { acCacheNote, acSetUserNotes, connectUserNotes, createNote, Note } from '../models/Notes';
 import { AppDispatch, AppState } from '../models/store';
 
 const NoteListItem: React.FC<{ note: Note }> = ({ note }) => {
@@ -36,11 +36,13 @@ const mapDispatchToProps = (dispatch: AppDispatch): DispatchProps => ({
 });
 
 type PageProps =
+  & RouteComponentProps
   & StateProps
   & DispatchProps;
 
 const NoteListPage: React.FC<PageProps> = (props) => {
   const [initialized, setInitialized] = useState(props.notes.length > 0);
+  const [working, setWorking] = useState(false);
 
   const [user, setUser] = useState(firebase.auth().currentUser);
   useEffect(() => {
@@ -66,7 +68,7 @@ const NoteListPage: React.FC<PageProps> = (props) => {
     );
   }, [user]);
 
-  if (!initialized) {
+  if (!initialized || working) {
     return (
       <div>
         🥚
@@ -76,9 +78,25 @@ const NoteListPage: React.FC<PageProps> = (props) => {
     );
   }
 
+  const onCreateClick = async () => {
+    setWorking(true);
+
+    const note = await createNote(user!.uid);
+    const path = `/notes/${note.id}/write`;
+    props.history.push(path);
+  };
+
   return (
     <AppLayout>
       <h1>Notes</h1>
+      <p>
+        <span
+          className="link"
+          onClick={onCreateClick}
+        >
+          Write new note
+        </span>
+      </p>
       <ul>
         {props.notes.length <= 0 && (
           <li>No notes</li>

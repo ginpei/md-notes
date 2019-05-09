@@ -1,6 +1,6 @@
+import { Reducer } from "redux";
 import firebase from "../middleware/firebase";
 import { noop } from "../misc";
-import { Reducer } from "redux";
 
 export interface Note {
   body: string;
@@ -9,6 +9,14 @@ export interface Note {
   updatedAt: firebase.firestore.Timestamp;
   userId: string;
 }
+
+const emptyNote: Note = {
+  body: '',
+  id: '',
+  title: '',
+  updatedAt: new firebase.firestore.Timestamp(0, 0),
+  userId: '',
+};
 
 export function snapshotToNote (
   s: firebase.firestore.QueryDocumentSnapshot,
@@ -90,6 +98,22 @@ export function saveNote(note: Note) {
   const coll = getNoteCollection();
   const doc = coll.doc(note.id);
   return doc.set(note);
+}
+
+export async function createNote(userId: string, initial?: Partial<Note>) {
+  if (!userId) {
+    throw new Error('User ID must be given');
+  }
+
+  const coll = getNoteCollection();
+  const note = {
+    ...emptyNote,
+    ...initial,
+    userId,
+  };
+  const ref = await coll.add(note);
+  note.id = ref.id;
+  return note;
 }
 
 export function now () {

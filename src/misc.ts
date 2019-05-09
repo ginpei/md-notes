@@ -17,3 +17,18 @@ export function getGetParams (search: string): { [key: string]: string } {
 }
 
 export const noop: () => void = () => {};
+
+export function fillZero2 (n: number) {
+  return `0${n}`.slice(-2);
+}
+
+export function dateToString (date: Date) {
+  const sYear = date.getFullYear();
+  const sMonth = fillZero2(date.getMonth() + 1);
+  const sDate = fillZero2(date.getDate());
+  const sHours = fillZero2(date.getHours());
+  const sMin = fillZero2(date.getMinutes());
+  const sSec = fillZero2(date.getSeconds());
+
+  return `${sYear}-${sMonth}-${sDate} ${sHours}:${sMin}:${sSec}`;
+}
