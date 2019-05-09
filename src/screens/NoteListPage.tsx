@@ -7,6 +7,16 @@ import { noop } from '../misc';
 import { acCacheNote, acSetUserNotes, connectUserNotes, Note } from '../models/Notes';
 import { AppDispatch, AppState } from '../models/store';
 
+const NoteListItem: React.FC<{ note: Note }> = ({ note }) => {
+  const title = note.title || 'New note';
+
+  return (
+    <li>
+      <Link to={`/notes/${note.id}/write`}>{title}</Link>
+    </li>
+  );
+};
+
 interface StateProps {
   notes: Note[];
 }
@@ -74,11 +84,11 @@ const NoteListPage: React.FC<PageProps> = (props) => {
           <li>No notes</li>
         )}
         {props.notes.map((note) => (
-          <li key={note.id}>
-            <Link to={`/notes/${note.id}/write`}>{note.title}</Link>
-          </li>
-          )
-        )}
+          <NoteListItem
+            key={note.id}
+            note={note}
+          />
+        ))}
       </ul>
     </AppLayout>
   );
