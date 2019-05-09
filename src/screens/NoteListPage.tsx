@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import AppLayout from '../independents/AppLayout';
-import firebase from '../middleware/firebase';
 import { dateToString, noop } from '../misc';
 import { acCacheNote, acSetUserNotes, connectUserNotes, createNote, getNoteTitle, Note, notePath } from '../models/Notes';
 import { AppDispatch, AppState } from '../models/store';
@@ -20,11 +19,15 @@ const NoteListItem: React.FC<{ note: Note }> = ({ note }) => {
 };
 
 interface StateProps {
+  loggedIn: boolean;
   notes: Note[];
+  userId: string;
 }
 
-const mapState = ({ notes }: AppState): StateProps => ({
-  notes: notes.userNoteIds.map((id) => notes.docs[id]),
+const mapState = (state: AppState): StateProps => ({
+  loggedIn: state.currentUser.loggedIn,
+  notes: state.notes.userNoteIds.map((id) => state.notes.docs[id]),
+  userId: state.currentUser.id,
 });
 
 interface DispatchProps {
@@ -46,29 +49,21 @@ const NoteListPage: React.FC<PageProps> = (props) => {
   const [initialized, setInitialized] = useState(props.notes.length > 0);
   const [working, setWorking] = useState(false);
 
-  const [user, setUser] = useState(firebase.auth().currentUser);
   useEffect(() => {
-    const auth = firebase.auth();
-    return auth.onAuthStateChanged((user) => {
-      setUser(user);
-    });
-  }, []);
-
-  useEffect(() => {
-    if (!user) {
+    if (!props.loggedIn) {
       props.setUserNotes([]);
       setInitialized(true);
       return noop;
     }
 
     return connectUserNotes(
-      user.uid,
+      props.userId,
       (notes) => {
         props.setUserNotes(notes);
         setInitialized(true);
       },
     );
-  }, [user]);
+  }, [props.loggedIn, props.userId]);
 
   if (!initialized || working) {
     return (
@@ -77,10 +72,14 @@ const NoteListPage: React.FC<PageProps> = (props) => {
   }
 
   const onCreateClick = async () => {
+    if (!props.userId) {
+      throw new Error('User must have logged in');
+    }
+
     setWorking(true);
 
     const body = `# New note at ${dateToString(new Date())}\n\n`;
-    const note = await createNote(user!.uid, { body });
+    const note = await createNote(props.userId, { body });
     const path = notePath(note, 'write');
     props.history.push(path);
   };

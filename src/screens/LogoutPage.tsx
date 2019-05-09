@@ -1,17 +1,23 @@
-import firebaseui from 'firebaseui';
 import React, { useState } from 'react';
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import AppLayout from '../independents/AppLayout';
 import firebase from '../middleware/firebase';
-import { notePath } from '../models/Notes';
+import { AppState } from '../models/store';
+
+interface StateProps {
+  loggedIn: boolean;
+}
+
+const mapState = ({ currentUser }: AppState): StateProps => ({
+  loggedIn: currentUser.loggedIn,
+});
 
 type PageProps =
-  & RouteComponentProps;
+  & RouteComponentProps
+  & StateProps;
 
 const LoginPage: React.FC<PageProps> = (props) => {
-  const user = firebase.auth().currentUser;
-
   const [signingOut, setSigningOut] = useState(false);
 
   const onLogoutClick = async () => {
@@ -22,7 +28,7 @@ const LoginPage: React.FC<PageProps> = (props) => {
   return (
     <AppLayout>
       <h1>Logout</h1>
-      {user ? (
+      {props.loggedIn ? (
         <p>
           <button
             disabled={signingOut}
@@ -43,4 +49,4 @@ const LoginPage: React.FC<PageProps> = (props) => {
   );
 }
 
-export default LoginPage;
+export default connect(mapState)(LoginPage);

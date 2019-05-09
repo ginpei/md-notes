@@ -5,9 +5,8 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
 import Dialog from '../independents/Dialog';
 import { BackLink } from '../independents/miscComponents';
-import firebase from '../middleware/firebase';
 import { getGetParams, noop } from '../misc';
-import { acCacheNote, acDeleteNote, connectNote, deleteNote, Note, now, saveNote, notePath } from '../models/Notes';
+import { acCacheNote, acDeleteNote, connectNote, deleteNote, Note, notePath, now, saveNote } from '../models/Notes';
 import { AppDispatch, AppState } from '../models/store';
 import InitializingPage from './InitializingPage';
 import NotFoundPage from './NotFoundPage';
@@ -51,11 +50,13 @@ interface PageParams {
 }
 
 interface StateProps {
+  loggedIn: boolean;
   note: Note;
 }
 
-const mapState = ({ notes }: AppState, props: PageProps): StateProps => ({
-  note: notes.docs[props.match.params.id],
+const mapState = (state: AppState, props: PageProps): StateProps => ({
+  loggedIn: state.currentUser.loggedIn,
+  note: state.notes.docs[props.match.params.id],
 });
 
 interface DispatchProps {
@@ -79,17 +80,9 @@ const NoteWritePage: React.FC<PageProps> = (props) => {
 
   const [content, setContent] = useState(note ? note.body : '');
   const [initialized, setInitialized] = useState(Boolean(note));
-  const [user, setUser] = useState(firebase.auth().currentUser);
 
   useEffect(() => {
-    const auth = firebase.auth();
-    return auth.onAuthStateChanged((user) => {
-      setUser(user);
-    });
-  }, []);
-
-  useEffect(() => {
-    if (!user) {
+    if (!props.loggedIn) {
       setInitialized(true);
       return noop;
     }
@@ -111,7 +104,7 @@ const NoteWritePage: React.FC<PageProps> = (props) => {
       () => setInitialized(true),
     );
     return disconnect;
-  }, [user, noteId, initialized]);
+  }, [props.loggedIn, noteId, initialized]);
 
   const params = getGetParams(props.location.search);
   const scene = params['scene'] || '';

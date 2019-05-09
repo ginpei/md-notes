@@ -5,9 +5,20 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import AppLayout from '../independents/AppLayout';
 import firebase from '../middleware/firebase';
 import { notePath } from '../models/Notes';
+import { AppState } from '../models/store';
+import { connect } from 'react-redux';
+
+interface StateProps {
+  loggedIn: boolean;
+}
+
+const mapState = ({ currentUser }: AppState): StateProps => ({
+  loggedIn: currentUser.loggedIn,
+});
 
 type PageProps =
-  & RouteComponentProps;
+  & RouteComponentProps
+  & StateProps;
 
 const LoginPage: React.FC<PageProps> = (props) => {
   const uiConfig: firebaseui.auth.Config = {
@@ -20,12 +31,10 @@ const LoginPage: React.FC<PageProps> = (props) => {
     tosUrl: () => props.history.push('/terms'),
   };
 
-  const user = firebase.auth().currentUser;
-
   return (
     <AppLayout>
       <h1>Login</h1>
-      {user ? (<>
+      {props.loggedIn ? (<>
         <p>
           ✓ Logged in.
         </p>
@@ -42,4 +51,4 @@ const LoginPage: React.FC<PageProps> = (props) => {
   );
 }
 
-export default LoginPage;
+export default connect(mapState)(LoginPage);
