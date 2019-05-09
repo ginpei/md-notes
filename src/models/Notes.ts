@@ -129,6 +129,11 @@ export async function createNote(userId: string, initial?: Partial<Note>) {
   return note;
 }
 
+export function deleteNote (note: Note) {
+  const coll = getNoteCollection();
+  return coll.doc(note.id).delete();
+}
+
 export function now () {
   return firebase.firestore.Timestamp.now();
 }

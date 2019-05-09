@@ -7,7 +7,7 @@ import Dialog from '../independents/Dialog';
 import { BackLink } from '../independents/miscComponents';
 import firebase from '../middleware/firebase';
 import { getGetParams, noop } from '../misc';
-import { acCacheNote, connectNote, Note, now, saveNote } from '../models/Notes';
+import { acCacheNote, connectNote, deleteNote, Note, now, saveNote } from '../models/Notes';
 import { AppDispatch, AppState } from '../models/store';
 import NotFoundPage from './NotFoundPage';
 
@@ -150,6 +150,18 @@ const NoteWritePage: React.FC<PageProps> = (props) => {
     props.history.push('?scene=settings-top');
   };
 
+  const onDeleteClick = async () => {
+    const message = 'Are you sure you want to delete this note permanently?';
+    const ok = window.confirm(message);
+    if (ok) {
+      deleteNote(note);
+
+      // move now without waiting the deletion completes
+      // otherwise connection error occurs
+      props.history.push('/notes');
+    }
+  };
+
   return (
     <Outer>
       <Editor
@@ -178,6 +190,14 @@ const NoteWritePage: React.FC<PageProps> = (props) => {
             <p>Here comes settings!</p>
             <p>
               <Link to="?scene=settings-heyYo">Hey Yo</Link>
+            </p>
+            <p>
+              <span
+                className="link"
+                onClick={onDeleteClick}
+              >
+                Delete
+              </span>
             </p>
           </Dialog>
         )
