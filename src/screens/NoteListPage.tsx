@@ -6,6 +6,7 @@ import firebase from '../middleware/firebase';
 import { dateToString, noop } from '../misc';
 import { acCacheNote, acSetUserNotes, connectUserNotes, createNote, getNoteTitle, Note } from '../models/Notes';
 import { AppDispatch, AppState } from '../models/store';
+import InitializingPage from './InitializingPage';
 
 const NoteListItem: React.FC<{ note: Note }> = ({ note }) => {
   const title = getNoteTitle(note);
@@ -70,11 +71,7 @@ const NoteListPage: React.FC<PageProps> = (props) => {
 
   if (!initialized || working) {
     return (
-      <div>
-        🥚
-        🐣
-        🐥
-      </div>
+      <InitializingPage/>
     );
   }
 

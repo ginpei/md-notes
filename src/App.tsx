@@ -5,6 +5,7 @@ import firebase from './middleware/firebase';
 import { createAppStore } from './models/store';
 import AboutPage from './screens/AboutPage';
 import HomePage from './screens/HomePage';
+import InitializingPage from './screens/InitializingPage';
 import NoteListPage from './screens/NoteListPage';
 import NoteWritePage from './screens/NoteWritePage';
 import NotFoundPage from './screens/NotFoundPage';
@@ -24,11 +25,7 @@ const App: React.FC = () => {
 
   if (!initialized) {
     return (
-      <div>
-        🥚
-        🐣
-        🐥
-      </div>
+      <InitializingPage/>
     );
   }
 

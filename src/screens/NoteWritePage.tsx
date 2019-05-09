@@ -7,8 +7,9 @@ import Dialog from '../independents/Dialog';
 import { BackLink } from '../independents/miscComponents';
 import firebase from '../middleware/firebase';
 import { getGetParams, noop } from '../misc';
-import { acCacheNote, acDeleteNote, connectNote, deleteNote, Note, now, saveNote, NoteDocs } from '../models/Notes';
+import { acCacheNote, acDeleteNote, connectNote, deleteNote, Note, now, saveNote } from '../models/Notes';
 import { AppDispatch, AppState } from '../models/store';
+import InitializingPage from './InitializingPage';
 import NotFoundPage from './NotFoundPage';
 
 const Outer = styled.div`
@@ -120,11 +121,7 @@ const NoteWritePage: React.FC<PageProps> = (props) => {
 
   if (!initialized) {
     return (
-      <div>
-        🥚
-        🐣
-        🐥
-      </div>
+      <InitializingPage/>
     );
   }
 
