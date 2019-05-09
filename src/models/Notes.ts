@@ -164,6 +164,18 @@ export function acCacheNote (note: Note): CacheNoteAction {
   };
 };
 
+interface DeleteNoteAction {
+  note: Note;
+  type: 'notes/delete';
+};
+
+export function acDeleteNote (note: Note): DeleteNoteAction {
+  return {
+    note,
+    type: 'notes/delete',
+  };
+};
+
 interface SetUserNotesAction {
   notes: Note[];
   type: 'notes/SetUserNotes';
@@ -178,6 +190,7 @@ export function acSetUserNotes (notes: Note[]): SetUserNotesAction {
 
 export type NoteAction =
   | CacheNoteAction
+  | DeleteNoteAction
   | SetUserNotesAction;
 
 const reduceDocs: Reducer<NoteDocs, NoteAction> = (state = {}, action) => {
@@ -187,6 +200,13 @@ const reduceDocs: Reducer<NoteDocs, NoteAction> = (state = {}, action) => {
         ...state,
         [action.note.id]: action.note,
       };
+    case 'notes/delete': {
+      const {
+        [action.note.id]: _,
+        ...docs
+      } = state;
+      return docs;
+    }
     case 'notes/SetUserNotes': {
       const docs = { ...state };
       action.notes.forEach((note) => {
@@ -209,6 +229,20 @@ export const reduceNotes: Reducer<
         ...state,
         docs: reduceDocs(state.docs, action),
       };
+    case 'notes/delete': {
+      const ids = [...state.userNoteIds];
+      const index = ids.indexOf(action.note.id);
+      if (index < 0) {
+        throw new Error('Delete target must be listed in user notes');
+      }
+      ids.splice(index, 1);
+
+      return {
+        ...state,
+        docs: reduceDocs(state.docs, action),
+        userNoteIds: ids,
+      };
+    }
     case 'notes/SetUserNotes':
       return {
         ...state,

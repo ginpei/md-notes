@@ -7,7 +7,7 @@ import Dialog from '../independents/Dialog';
 import { BackLink } from '../independents/miscComponents';
 import firebase from '../middleware/firebase';
 import { getGetParams, noop } from '../misc';
-import { acCacheNote, connectNote, deleteNote, Note, now, saveNote } from '../models/Notes';
+import { acCacheNote, acDeleteNote, connectNote, deleteNote, Note, now, saveNote, NoteDocs } from '../models/Notes';
 import { AppDispatch, AppState } from '../models/store';
 import NotFoundPage from './NotFoundPage';
 
@@ -59,10 +59,12 @@ const mapState = ({ notes }: AppState, props: PageProps): StateProps => ({
 
 interface DispatchProps {
   cacheNote: (note: Note) => void;
+  deleteNote: (note: Note) => void;
 }
 
 const mapDispatch = (dispatch: AppDispatch): DispatchProps => ({
   cacheNote: (note) => dispatch(acCacheNote(note)),
+  deleteNote: (note) => dispatch(acDeleteNote(note)),
 });
 
 type PageProps =
@@ -155,6 +157,7 @@ const NoteWritePage: React.FC<PageProps> = (props) => {
     const ok = window.confirm(message);
     if (ok) {
       deleteNote(note);
+      props.deleteNote(note);
 
       // move now without waiting the deletion completes
       // otherwise connection error occurs
