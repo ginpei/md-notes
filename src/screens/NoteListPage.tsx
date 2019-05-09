@@ -4,11 +4,11 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import AppLayout from '../independents/AppLayout';
 import firebase from '../middleware/firebase';
 import { dateToString, noop } from '../misc';
-import { acCacheNote, acSetUserNotes, connectUserNotes, createNote, Note } from '../models/Notes';
+import { acCacheNote, acSetUserNotes, connectUserNotes, createNote, getNoteTitle, Note } from '../models/Notes';
 import { AppDispatch, AppState } from '../models/store';
 
 const NoteListItem: React.FC<{ note: Note }> = ({ note }) => {
-  const title = note.title || 'New note';
+  const title = getNoteTitle(note);
 
   return (
     <li>

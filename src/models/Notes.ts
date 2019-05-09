@@ -18,6 +18,19 @@ const emptyNote: Note = {
   userId: '',
 };
 
+export function getNoteTitle (note: Note) {
+  if (note.title) {
+    return note.title;
+  }
+
+  const body = note.body.trim();
+  if (body.startsWith('# ')) {
+    return body.split('\n')[0].slice(2);
+  }
+
+  return 'New note';
+}
+
 export function snapshotToNote (
   s: firebase.firestore.QueryDocumentSnapshot,
 ): Note;
