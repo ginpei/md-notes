@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import firebase from './middleware/firebase';
+import { createAppStore } from './models/store';
 import AboutPage from './screens/AboutPage';
 import HomePage from './screens/HomePage';
 import NoteListPage from './screens/NoteListPage';
 import NoteWritePage from './screens/NoteWritePage';
 import NotFoundPage from './screens/NotFoundPage';
-import { createAppStore } from './models/store';
-import { Provider } from 'react-redux';
 
 const App: React.FC = () => {
   const [initialized, setInitialized] = useState(false);
