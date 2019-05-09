@@ -39,10 +39,8 @@ const App: React.FC = () => {
           <Switch>
             <Route path="/" exact component={HomePage} />
             <Route path="/about" component={AboutPage} />
-            {user && <>
-              <Route path="/notes" exact component={NoteListPage} />
-              <Route path="/notes/:id/write" component={NoteWritePage} />
-            </>}
+            {user && <Route path="/notes" exact component={NoteListPage} />}
+            {user && <Route path="/notes/:id/write" component={NoteWritePage} />}
             <Route component={NotFoundPage}/>
           </Switch>
         </div>
