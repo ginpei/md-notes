@@ -10,7 +10,7 @@ import InitializingPage from './InitializingPage';
 
 const NoteListItem: React.FC<{ note: Note }> = ({ note }) => {
   const title = getNoteTitle(note);
-  const path = notePath(note, 'write');
+  const path = notePath(note);
 
   return (
     <li>

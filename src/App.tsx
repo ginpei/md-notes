@@ -7,6 +7,7 @@ import AboutPage from './screens/AboutPage';
 import HomePage from './screens/HomePage';
 import InitializingPage from './screens/InitializingPage';
 import NoteListPage from './screens/NoteListPage';
+import NoteViewPage from './screens/NoteViewPage';
 import NoteWritePage from './screens/NoteWritePage';
 import NotFoundPage from './screens/NotFoundPage';
 
@@ -36,8 +37,9 @@ const App: React.FC = () => {
           <Switch>
             <Route path="/" exact component={HomePage} />
             <Route path="/about" component={AboutPage} />
-            {user && <Route path="/notes" exact component={NoteListPage} />}
             {user && <Route path="/notes/:id/write" component={NoteWritePage} />}
+            {user && <Route path="/notes/:id" component={NoteViewPage} />}
+            {user && <Route path="/notes" component={NoteListPage} />}
             <Route component={NotFoundPage}/>
           </Switch>
         </div>
