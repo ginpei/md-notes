@@ -44,7 +44,6 @@ const NoteWritePage: React.FC<PageProps> = (props) => {
     const disconnect = connectNote(
       noteId,
       (note) => {
-        console.log('# note', note);
         if (note) {
           props.cacheNote(note);
         }
