@@ -12,6 +12,7 @@ import NoteListPage from './screens/NoteListPage';
 import NoteViewPage from './screens/NoteViewPage';
 import NoteWritePage from './screens/NoteWritePage';
 import NotFoundPage from './screens/NotFoundPage';
+import { acSetCurrentUser } from './models/CurrentUser';
 
 const App: React.FC = () => {
   const [initialized, setInitialized] = useState(false);
@@ -22,6 +23,7 @@ const App: React.FC = () => {
     const auth = firebase.auth();
     return auth.onAuthStateChanged((currentUser) => {
       setUser(currentUser);
+      store.dispatch(acSetCurrentUser(currentUser));
       setInitialized(true);
     });
   }, []);
