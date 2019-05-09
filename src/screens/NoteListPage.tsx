@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import AppLayout from '../independents/AppLayout';
 import firebase from '../middleware/firebase';
-import { noop } from '../misc';
+import { dateToString, noop } from '../misc';
 import { acCacheNote, acSetUserNotes, connectUserNotes, createNote, Note } from '../models/Notes';
 import { AppDispatch, AppState } from '../models/store';
 
@@ -81,7 +81,8 @@ const NoteListPage: React.FC<PageProps> = (props) => {
   const onCreateClick = async () => {
     setWorking(true);
 
-    const note = await createNote(user!.uid);
+    const body = `# New note at ${dateToString(new Date())}\n\n`;
+    const note = await createNote(user!.uid, { body });
     const path = `/notes/${note.id}/write`;
     props.history.push(path);
   };
