@@ -18,6 +18,18 @@ const emptyNote: Note = {
   userId: '',
 };
 
+export function notePath (note?: Note, type?: 'write') {
+  if (!note) {
+    return '/notes';
+  }
+
+  if (type === 'write') {
+    return `/notes/${note.id}/write`;
+  }
+
+  return `/notes/${note.id}`;
+}
+
 export function getNoteTitle (note: Note) {
   if (note.title) {
     return note.title;

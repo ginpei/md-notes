@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import AppLayout from '../independents/AppLayout';
+import { notePath } from '../models/Notes';
 
 const HomePage: React.FC = () => {
   return (
@@ -10,8 +11,7 @@ const HomePage: React.FC = () => {
         <img src="/icon-512.png" alt="logo" width="256" height="256" />
       </div>
       <ul>
-        <li><Link to="/notes">Note list</Link></li>
-        <li><Link to="/notes/12/write">Write a note</Link></li>
+        <li><Link to={notePath()}>Note list</Link></li>
       </ul>
     </AppLayout>
   );

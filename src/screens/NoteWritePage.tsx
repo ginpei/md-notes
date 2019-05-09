@@ -7,7 +7,7 @@ import Dialog from '../independents/Dialog';
 import { BackLink } from '../independents/miscComponents';
 import firebase from '../middleware/firebase';
 import { getGetParams, noop } from '../misc';
-import { acCacheNote, acDeleteNote, connectNote, deleteNote, Note, now, saveNote } from '../models/Notes';
+import { acCacheNote, acDeleteNote, connectNote, deleteNote, Note, now, saveNote, notePath } from '../models/Notes';
 import { AppDispatch, AppState } from '../models/store';
 import InitializingPage from './InitializingPage';
 import NotFoundPage from './NotFoundPage';
@@ -158,7 +158,7 @@ const NoteWritePage: React.FC<PageProps> = (props) => {
 
       // move now without waiting the deletion completes
       // otherwise connection error occurs
-      props.history.push('/notes');
+      props.history.push(notePath());
     }
   };
 

@@ -4,16 +4,17 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import AppLayout from '../independents/AppLayout';
 import firebase from '../middleware/firebase';
 import { dateToString, noop } from '../misc';
-import { acCacheNote, acSetUserNotes, connectUserNotes, createNote, getNoteTitle, Note } from '../models/Notes';
+import { acCacheNote, acSetUserNotes, connectUserNotes, createNote, getNoteTitle, Note, notePath } from '../models/Notes';
 import { AppDispatch, AppState } from '../models/store';
 import InitializingPage from './InitializingPage';
 
 const NoteListItem: React.FC<{ note: Note }> = ({ note }) => {
   const title = getNoteTitle(note);
+  const path = notePath(note, 'write');
 
   return (
     <li>
-      <Link to={`/notes/${note.id}/write`}>{title}</Link>
+      <Link to={path}>{title}</Link>
     </li>
   );
 };
@@ -80,7 +81,7 @@ const NoteListPage: React.FC<PageProps> = (props) => {
 
     const body = `# New note at ${dateToString(new Date())}\n\n`;
     const note = await createNote(user!.uid, { body });
-    const path = `/notes/${note.id}/write`;
+    const path = notePath(note, 'write');
     props.history.push(path);
   };
 
