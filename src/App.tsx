@@ -6,6 +6,8 @@ import { createAppStore } from './models/store';
 import AboutPage from './screens/AboutPage';
 import HomePage from './screens/HomePage';
 import InitializingPage from './screens/InitializingPage';
+import LoginPage from './screens/LoginPage';
+import LogoutPage from './screens/LogoutPage';
 import NoteListPage from './screens/NoteListPage';
 import NoteViewPage from './screens/NoteViewPage';
 import NoteWritePage from './screens/NoteWritePage';
@@ -37,6 +39,8 @@ const App: React.FC = () => {
           <Switch>
             <Route path="/" exact component={HomePage} />
             <Route path="/about" component={AboutPage} />
+            <Route path="/login" component={LoginPage} />
+            <Route path="/logout" component={LogoutPage} />
             {user && <Route path="/notes/:id/write" component={NoteWritePage} />}
             {user && <Route path="/notes/:id" component={NoteViewPage} />}
             {user && <Route path="/notes" component={NoteListPage} />}
