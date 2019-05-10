@@ -1,12 +1,12 @@
 import NiceMarkdown from '@ginpei/react-nice-markdown';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { Link, RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
+import EditorSettingsDialog from '../complexes/EditorSettingsDialog';
 import Dialog from '../independents/Dialog';
-import { BackLink } from '../independents/miscComponents';
 import { getGetParams, noop } from '../misc';
-import { acCacheNote, acDeleteNote, connectNote, deleteNote, Note, notePath, now, saveNote } from '../models/Notes';
+import { acCacheNote, connectNote, Note, notePath, now, saveNote } from '../models/Notes';
 import { AppDispatch, AppState } from '../models/store';
 import InitializingPage from './InitializingPage';
 import NotFoundPage from './NotFoundPage';
@@ -61,12 +61,10 @@ const mapState = (state: AppState, props: PageProps): StateProps => ({
 
 interface DispatchProps {
   cacheNote: (note: Note) => void;
-  deleteNote: (note: Note) => void;
 }
 
 const mapDispatch = (dispatch: AppDispatch): DispatchProps => ({
   cacheNote: (note) => dispatch(acCacheNote(note)),
-  deleteNote: (note) => dispatch(acDeleteNote(note)),
 });
 
 type PageProps =
@@ -142,17 +140,10 @@ const NoteWritePage: React.FC<PageProps> = (props) => {
     props.history.push('?scene=settings-top');
   };
 
-  const onDeleteClick = async () => {
-    const message = 'Are you sure you want to delete this note permanently?';
-    const ok = window.confirm(message);
-    if (ok) {
-      deleteNote(note);
-      props.deleteNote(note);
-
-      // move now without waiting the deletion completes
-      // otherwise connection error occurs
-      props.history.push(notePath());
-    }
+  const onDelete = () => {
+    // move now without waiting the deletion completes
+    // otherwise connection error occurs
+    props.history.push(notePath());
   };
 
   return (
@@ -170,30 +161,12 @@ const NoteWritePage: React.FC<PageProps> = (props) => {
         <button onClick={onSettingsClick}>…</button>
       </ToolbarOuter>
       {isSetting && (
-        scene === 'settings-heyYo' ? (
-          <Dialog>
-            <h1>Hey Yo!</h1>
-            <p>
-              <BackLink history={props.history}>← Back</BackLink>
-            </p>
-          </Dialog>
-        ) : (
-          <Dialog>
-            <h1>Settings</h1>
-            <p>Here comes settings!</p>
-            <p>
-              <Link to="?scene=settings-heyYo">Hey Yo</Link>
-            </p>
-            <p>
-              <span
-                className="link"
-                onClick={onDeleteClick}
-              >
-                Delete
-              </span>
-            </p>
-          </Dialog>
-        )
+        <EditorSettingsDialog
+          history={props.history}
+          note={note}
+          onDelete={onDelete}
+          scene={scene}
+        />
       )}
       {isPreviewing && (
         <Dialog>
