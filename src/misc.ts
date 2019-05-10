@@ -32,3 +32,22 @@ export function dateToString (date: Date) {
 
   return `${sYear}-${sMonth}-${sDate} ${sHours}:${sMin}:${sSec}`;
 }
+
+export function updatedAtToString (
+  updatedAt: firebase.firestore.Timestamp,
+  now = Date.now(),
+) {
+  const min = 60000;
+  const hour = 60 * min;
+  const timeInMS = updatedAt.seconds * 1000;
+  const elapse = now - timeInMS;
+
+  if (elapse < min) {
+    return '< 1 min';
+  }
+  if (elapse < hour) {
+    return `${Math.floor(elapse / min)} min`;
+  }
+
+  return dateToString(new Date(timeInMS));
+}

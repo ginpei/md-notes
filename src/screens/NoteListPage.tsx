@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
+import styled from 'styled-components';
 import AppLayout from '../independents/AppLayout';
-import { dateToString, noop } from '../misc';
+import { dateToString, noop, updatedAtToString } from '../misc';
 import { acCacheNote, acSetUserNotes, connectUserNotes, createNote, getNoteTitle, Note, notePath } from '../models/Notes';
 import { AppDispatch, AppState } from '../models/store';
 import InitializingPage from './InitializingPage';
+
+const UpdatedAt = styled.span`
+  color: #999;
+  font-size: 0.8em;
+`;
 
 const NoteListItem: React.FC<{ note: Note }> = ({ note }) => {
   const title = getNoteTitle(note);
@@ -13,7 +19,11 @@ const NoteListItem: React.FC<{ note: Note }> = ({ note }) => {
 
   return (
     <li>
-      <Link to={path}>{title}</Link>
+      <Link to={path}>
+        {title}
+        {' '}
+        <UpdatedAt>({updatedAtToString(note.updatedAt)})</UpdatedAt>
+      </Link>
     </li>
   );
 };
@@ -26,7 +36,9 @@ interface StateProps {
 
 const mapState = (state: AppState): StateProps => ({
   loggedIn: state.currentUser.loggedIn,
-  notes: state.notes.userNoteIds.map((id) => state.notes.docs[id]),
+  notes: state.notes.userNoteIds
+    .map((id) => state.notes.docs[id])
+    .sort((n1, n2) => n2.updatedAt.seconds - n1.updatedAt.seconds),
   userId: state.currentUser.id,
 });
 
