@@ -14,16 +14,13 @@ const UpdatedAt = styled.span`
 `;
 
 const NoteListItem: React.FC<{ note: Note }> = ({ note }) => {
-  const title = getNoteTitle(note);
-  const path = notePath(note);
-
   return (
     <li>
-      <Link to={path}>
-        {title}
-        {' '}
-        <UpdatedAt>({updatedAtToString(note.updatedAt)})</UpdatedAt>
-      </Link>
+      <Link to={notePath(note)}>{getNoteTitle(note)}</Link>
+      {' '}
+      <Link to={notePath(note, 'write')}>📝</Link>
+      {' '}
+      <UpdatedAt>({updatedAtToString(note.updatedAt)})</UpdatedAt>
     </li>
   );
 };
