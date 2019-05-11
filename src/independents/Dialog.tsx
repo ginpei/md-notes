@@ -29,7 +29,7 @@ const Dialog: React.FC = ({ children }) => {
 
 export default Dialog;
 
-export const DialogTitle: React.FC<any> = (props) => {
+export const DialogTitle: React.FC<React.ComponentPropsWithRef<'h1'>> = (props) => {
   return (
     <h1
       {...props}
@@ -42,7 +42,7 @@ export const DialogTitle: React.FC<any> = (props) => {
   );
 }
 
-export const DialogHeading: React.FC<any> = (props) => (
+export const DialogHeading: React.FC<React.ComponentPropsWithRef<'h2'>> = (props) => (
   <h2
     {...props}
     className="container"
