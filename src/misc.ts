@@ -1,3 +1,8 @@
+import { ElementType } from "react";
+
+export type HtmlComponent<T extends ElementType> =
+  React.FC<React.ComponentPropsWithRef<T>>;
+
 /**
  * @example
  * const params = getGetParams(props.location.search);

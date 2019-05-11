@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, LinkProps } from 'react-router-dom';
+import { HtmlComponent } from '../misc';
 
 const Dialog: React.FC = ({ children }) => {
   return (
@@ -29,7 +30,7 @@ const Dialog: React.FC = ({ children }) => {
 
 export default Dialog;
 
-export const DialogTitle: React.FC<React.ComponentPropsWithRef<'h1'>> = (props) => {
+export const DialogTitle: HtmlComponent<'h1'> = (props) => {
   return (
     <h1
       {...props}
@@ -42,7 +43,7 @@ export const DialogTitle: React.FC<React.ComponentPropsWithRef<'h1'>> = (props) 
   );
 }
 
-export const DialogHeading: React.FC<React.ComponentPropsWithRef<'h2'>> = (props) => (
+export const DialogHeading: HtmlComponent<'h2'> = (props) => (
   <h2
     {...props}
     className="container"
@@ -65,7 +66,7 @@ export const DialogLink: React.FC<LinkProps> = (props) => (
   />
 );
 
-interface DialogInputProp extends React.ComponentPropsWithRef<'input'> {
+interface DialogInputProp extends HtmlComponent<'input'> {
   description?: string;
   label: string;
 };
