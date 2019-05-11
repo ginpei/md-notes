@@ -1,91 +1,69 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
-
-const DialogOuter = styled.div`
-background-color: #0003;
-height: 100vh;
-left: 0;
-position: fixed;
-top: 0;
-width: 100vw;
-`;
-
-const DialogInner = styled.article`
-background-color: #fff;
-border-radius: 0.2em;
-height: calc(100% - 2rem);
-left: 1rem;
-overflow: auto;
-position: absolute;
-top: 1rem;
-width: calc(100% - 2rem);
-`;
+import { Link, LinkProps } from 'react-router-dom';
 
 const Dialog: React.FC = ({ children }) => {
   return (
-    <DialogOuter>
-      <DialogInner>
+    <div style={{
+      backgroundColor: '#0003',
+      height: '100vh',
+      left: '0',
+      position: 'fixed',
+      top: '0',
+      width: '100vw',
+    }}>
+      <div style={{
+        backgroundColor: '#fff',
+        borderRadius: '0.2em',
+        height: 'calc(100% - 2rem)',
+        left: '1rem',
+        overflow: 'auto',
+        position: 'absolute',
+        top: '1rem',
+        width: 'calc(100% - 2rem)',
+      }}>
         {children}
-      </DialogInner>
-    </DialogOuter>
+      </div>
+    </div>
   );
 };
 
 export default Dialog;
 
-export const DialogTitle = styled.h1.attrs({
-  className: 'container',
-})`
-  height: 2em;
-  line-height: 2em;
-`;
+export const DialogTitle: React.FC<any> = (props) => {
+  return (
+    <h1
+      {...props}
+      className="container"
+      style={{
+        height: '2em',
+        lineHeight: '2em',
+      }}
+    />
+  );
+}
 
-export const DialogHeading = styled.h2.attrs({
-  className: 'container',
-})`
-  font-size: 0.8em;
-  height: 2em;
-  line-height: 2em;
-  margin-top: 1em;
-`;
+export const DialogHeading: React.FC<any> = (props) => (
+  <h2
+    {...props}
+    className="container"
+    style={{
+      fontSize: '0.8em',
+      height: '2em',
+      lineHeight: '2em',
+      marginTop: '1em',
+    }}
+  />
+);
 
-export const DialogLink = styled(Link).attrs({
-  className: 'container Dialog-item',
-})`
-  &:active {
-    background-color: #f0f9ff;
-  }
-`;
-
-const DialogInputOuter = styled.label.attrs({
-  className: 'container Dialog-item',
-})`
-  color: #666;
-  height: auto;
-`;
-
-const DialogInputLine = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
-
-const DialogInputLabel = styled.span`
-  margin-right: 0.5em;
-`;
-
-const DialogInnerInput = styled.input`
-  border-style: none;
-  text-align: right;
-  width: 100%;
-`;
-
-const DialogInputDescription = styled.div`
-  font-size: 0.8em;
-  font-style: oblique;
-  height: 1.2em;
-  line-height: 1.2em;
-`;
+export const DialogLink: React.FC<LinkProps> = (props) => (
+  <Link
+    {...props}
+    className="container Dialog-item"
+    style={{
+      backgroundColor: '#f0f9ff',
+    }}
+  />
+);
 
 interface DialogInputProp extends React.ComponentPropsWithRef<'input'> {
   description?: string;
@@ -95,14 +73,45 @@ interface DialogInputProp extends React.ComponentPropsWithRef<'input'> {
 export const DialogInput: React.FC<DialogInputProp> = (props) => {
   const { description, label, ...inputProps } = props;
   return (
-    <DialogInputOuter>
-      <DialogInputLine>
-        <DialogInputLabel>{label}</DialogInputLabel>
-        <DialogInnerInput {...inputProps} />
-      </DialogInputLine>
+    <label
+      className="container Dialog-item"
+      style={{
+        color: '#666',
+        height: 'auto',
+      }}
+    >
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+        }}
+      >
+        <span
+          style={{
+            marginRight: '0.5em',
+          }}
+        >
+          {label}
+        </span>
+        <input
+          {...inputProps}
+          style={{
+            borderStyle: 'none',
+            textAlign: 'right',
+            width: '100%',
+          }}
+        />
+      </div>
       {description && (
-        <DialogInputDescription>{description}</DialogInputDescription>
+        <div
+          style={{
+            fontSize: '0.8em',
+            fontStyle: 'oblique',
+            height: '1.2em',
+            lineHeight: '1.2em',
+          }}
+        >{description}</div>
       )}
-    </DialogInputOuter>
+    </label>
   );
 };
