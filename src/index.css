@@ -20,6 +20,30 @@ body {
   padding: 0 1rem;
 }
 
+.antiContainer {
+  margin: 0 -1rem;
+  width: calc(100% + 2rem);
+}
+
+.dangerZone {
+  border-radius: 0.1rem;
+  border: 1px solid tomato;
+  box-shadow: 0 0 0.5em inset #f003;
+  padding: 1rem 0.5rem;
+}
+
+.Dialog-item {
+  border-color: #ccc;
+  border-style: solid none;
+  border-width: 1px;
+  display: block;
+  height: 1em;
+  line-height: 1em;
+  margin-bottom: -1px;
+  padding-bottom: 1em;
+  padding-top: 1em;
+}
+
 :any-link,
 .link {
   color: var(--color-link);

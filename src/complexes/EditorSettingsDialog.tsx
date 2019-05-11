@@ -1,9 +1,9 @@
 import { History } from 'history';
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import Dialog from '../independents/Dialog';
+import Dialog, { DialogHeading, DialogLink, DialogTitle, DialogInput } from '../independents/Dialog';
 import { BackLink } from '../independents/miscComponents';
-import { acDeleteNote, deleteNote, Note } from '../models/Notes';
+import { acDeleteNote, deleteNote, getNoteTitle, Note } from '../models/Notes';
 import { AppDispatch } from '../models/store';
 
 interface DispatchProps {
@@ -28,6 +28,8 @@ type ComponentProps =
 const EditorSettingsDialog: React.FC<ComponentProps> = (props) => {
   const { note } = props;
 
+  const [title, setTitle] = useState('Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, voluptatibus fugiat maxime labore sequi et ipsam autem iste voluptates repellat enim cupiditate laborum? Porro sapiente sequi hic nesciunt rerum illo.');
+
   if (props.scene === 'settings-heyYo') {
     return (
       <Dialog>
@@ -35,6 +37,19 @@ const EditorSettingsDialog: React.FC<ComponentProps> = (props) => {
         <p>
           <BackLink history={props.history}>← Back</BackLink>
         </p>
+      </Dialog>
+    );
+  }
+
+  if (props.scene === 'settings-editor') {
+    return (
+      <Dialog>
+        <div className="container">
+          <h1>Editor settings</h1>
+          <p>
+            <BackLink history={props.history}>← Back</BackLink>
+          </p>
+        </div>
       </Dialog>
     );
   }
@@ -51,15 +66,37 @@ const EditorSettingsDialog: React.FC<ComponentProps> = (props) => {
 
   return (
     <Dialog>
-      <h1>Settings</h1>
-      <p>
-        <span
-          className="link"
-          onClick={onDeleteClick}
-        >
-          Delete
-        </span>
-      </p>
+      <DialogTitle>Settings</DialogTitle>
+      <DialogLink to="?scene=settings-editor">Editor settings</DialogLink>
+      <DialogHeading>Note status</DialogHeading>
+      <DialogInput
+        description="Leave empty to pick from the first heading automatically."
+        label="Title"
+        onChange={(event) => setTitle(event.currentTarget.value)}
+        value={title}
+      />
+      <DialogLink to="?scene=settings-editor">Status</DialogLink>
+
+      <hr style={{ marginTop: '3rem' }}/>
+      <div className="container">
+        <label>
+          Title:
+          <input type="text" value={getNoteTitle(note)} disabled />
+        </label>
+        <hr/>
+        <label>
+          <input type="checkbox" disabled />
+          Private
+        </label>
+        <h2>Danger zone</h2>
+        <div className="dangerZone">
+          <button
+            onClick={onDeleteClick}
+          >
+            Delete
+          </button>
+        </div>
+      </div>
     </Dialog>
   );
 };
