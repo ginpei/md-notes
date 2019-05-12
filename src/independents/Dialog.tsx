@@ -47,10 +47,8 @@ export const DialogInput: React.FC<DialogInputProp> = (props) => {
   const { description, label, ...inputProps } = props;
   return (
     <label className="container Dialog-item DialogInput">
-      <div className="DialogInputLine">
-        <span className="DialogInputLabel">{label}</span>
-        <input {...inputProps} className="DialogInnerInput" />
-      </div>
+      <span className="DialogInputLabel">{label}</span>
+      <input {...inputProps} className="DialogInnerInput" />
       {description && (
         <div className="DialogInputDescription">{description}</div>
       )}
