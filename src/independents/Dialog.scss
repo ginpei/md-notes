@@ -1,0 +1,65 @@
+.Dialog-outer {
+  background-color: #0003;
+  height: 100vh;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+
+}
+
+.Dialog {
+  background-color: #fff;
+  border-radius: 0.2em;
+  height: calc(100% - 2rem);
+  left: 1rem;
+  overflow: auto;
+  position: absolute;
+  top: 1rem;
+  width: calc(100% - 2rem);
+}
+
+.DialogTitle {
+  height: 2em;
+  line-height: 2em;
+}
+
+.DialogHeading {
+  font-size: 0.8em;
+  height: 2em;
+  line-height: 2em;
+  margin-top: 1em;
+}
+
+.DialogLink {
+  &:hover {
+    background-color: #f0f9ff;
+  }
+}
+
+.DialogInput {
+  color: #666;
+  height: auto;
+
+  .DialogInputLine {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .DialogInputLabel {
+    margin-right: 0.5em;
+  }
+
+  .DialogInnerInput {
+    border-style: none;
+    text-align: right;
+    width: 100%;
+  }
+
+  .DialogInputDescription {
+    font-size: 0.8em;
+    font-style: oblique;
+    height: 1.2em;
+    line-height: 1.2em;
+  }
+}

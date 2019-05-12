@@ -12,6 +12,7 @@
     "@types/react-router-dom": "^4.3.2",
     "@types/styled-components": "^4.1.14",
     "firebase": "^5.11.1",
+    "node-sass": "^4.12.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-firebaseui": "^3.1.2",
