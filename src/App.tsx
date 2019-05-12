@@ -20,9 +20,9 @@ const App: React.FC = () => {
 
   useEffect(() => {
     return connectCurrentUser(
-      (currentUser) => {
-        setUser(currentUser);
-        store.dispatch(acSetCurrentUser(currentUser));
+      (user) => {
+        setUser(user);
+        store.dispatch(acSetCurrentUser(user));
         setInitialized(true);
       },
     );
