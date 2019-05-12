@@ -28,6 +28,7 @@ type ComponentProps =
 const EditorSettingsDialog: React.FC<ComponentProps> = (props) => {
   const { note } = props;
 
+  const [dangerous, setDangerous] = useState(false);
   const [title, setTitle] = useState('');
   const [access, setAccess] = useState('private');
 
@@ -94,7 +95,20 @@ const EditorSettingsDialog: React.FC<ComponentProps> = (props) => {
       <DialogSection className="DialogDangerZone">
         <DialogHeading>Danger zone</DialogHeading>
         <div className="container Dialog-item">
-          <button onClick={onDeleteClick}>Delete</button>
+          <button
+            disabled={dangerous}
+            onClick={() => setDangerous(true)}
+          >
+            Activate danger zone
+          </button>
+        </div>
+        <div className="container Dialog-item">
+          <button
+            disabled={!dangerous}
+            onClick={onDeleteClick}
+          >
+            Delete
+          </button>
         </div>
       </DialogSection>
     </Dialog>
