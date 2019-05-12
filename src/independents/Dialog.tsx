@@ -3,15 +3,13 @@ import { Link, LinkProps } from 'react-router-dom';
 import { HtmlComponent, HtmlProps } from '../misc';
 import './Dialog.scss';
 
-const Dialog: React.FC = ({ children }) => {
-  return (
-    <div className="Dialog-outer">
-      <div className="Dialog">
-        {children}
-      </div>
+const Dialog: React.FC = ({ children }) => (
+  <div className="Dialog-outer">
+    <div className="Dialog">
+      {children}
     </div>
-  );
-};
+  </div>
+);
 
 export default Dialog;
 
@@ -22,14 +20,12 @@ export const DialogSection: HtmlComponent<'section'> = (props) => (
   />
 );
 
-export const DialogTitle: HtmlComponent<'h1'> = (props) => {
-  return (
-    <h1
-      {...props}
-      className="container DialogTitle"
-    />
-  );
-}
+export const DialogTitle: HtmlComponent<'h1'> = (props) => (
+  <h1
+    {...props}
+    className="container DialogTitle"
+  />
+);
 
 export const DialogHeading: HtmlComponent<'h2'> = (props) => (
   <h2
