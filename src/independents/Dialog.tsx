@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, LinkProps } from 'react-router-dom';
-import { HtmlComponent } from '../misc';
+import { HtmlComponent, HtmlProps } from '../misc';
 
 const Dialog: React.FC = ({ children }) => {
   return (
@@ -66,7 +66,7 @@ export const DialogLink: React.FC<LinkProps> = (props) => (
   />
 );
 
-interface DialogInputProp extends HtmlComponent<'input'> {
+interface DialogInputProp extends HtmlProps<'input'> {
   description?: string;
   label: string;
 };

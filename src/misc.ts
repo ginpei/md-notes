@@ -1,7 +1,10 @@
 import { ElementType } from "react";
 
+export type HtmlProps<T extends ElementType> =
+  React.ComponentPropsWithRef<T>;
+
 export type HtmlComponent<T extends ElementType> =
-  React.FC<React.ComponentPropsWithRef<T>>;
+  React.FC<HtmlProps<T>>;
 
 /**
  * @example
