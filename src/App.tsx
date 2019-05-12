@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import firebase from './middleware/firebase';
+import { acSetCurrentUser, connectCurrentUser } from './models/CurrentUser';
 import { createAppStore } from './models/store';
 import AboutPage from './screens/AboutPage';
 import HomePage from './screens/HomePage';
@@ -12,7 +12,6 @@ import NoteListPage from './screens/NoteListPage';
 import NoteViewPage from './screens/NoteViewPage';
 import NoteWritePage from './screens/NoteWritePage';
 import NotFoundPage from './screens/NotFoundPage';
-import { acSetCurrentUser } from './models/CurrentUser';
 
 const App: React.FC = () => {
   const [initialized, setInitialized] = useState(false);
@@ -20,12 +19,13 @@ const App: React.FC = () => {
   const [store] = useState(createAppStore());
 
   useEffect(() => {
-    const auth = firebase.auth();
-    return auth.onAuthStateChanged((currentUser) => {
-      setUser(currentUser);
-      store.dispatch(acSetCurrentUser(currentUser));
-      setInitialized(true);
-    });
+    return connectCurrentUser(
+      (currentUser) => {
+        setUser(currentUser);
+        store.dispatch(acSetCurrentUser(currentUser));
+        setInitialized(true);
+      },
+    );
   }, []);
 
   if (!initialized) {

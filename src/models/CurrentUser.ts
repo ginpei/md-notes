@@ -1,4 +1,6 @@
 import { Reducer } from 'redux';
+import firebase from '../middleware/firebase';
+import { noop } from '../misc';
 
 export interface CurrentUserState {
   id: string;
@@ -40,4 +42,22 @@ export const reduceCurrentUser: Reducer<
     default:
       return state;
   }
+}
+
+export function connectCurrentUser (
+  onNext: (user: firebase.User | null) => void,
+  onError: (error: firebase.auth.Error) => void = noop,
+  onAny: () => void = noop,
+) {
+  const auth = firebase.auth();
+  return auth.onAuthStateChanged(
+    (user) => {
+      onNext(user);
+      onAny();
+    },
+    (error) => {
+      onError(error);
+      onAny();
+    },
+  );
 }
