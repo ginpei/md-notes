@@ -19,16 +19,39 @@
   width: calc(100% - 2rem);
 }
 
+.Dialog-item {
+  border-color: #ccc;
+  border-style: solid none;
+  border-width: 1px;
+  display: block;
+  height: 1em;
+  line-height: 1em;
+  margin-bottom: -1px;
+  padding-bottom: 1em;
+  padding-top: 1em;
+}
+
+.DialogDangerZone {
+  .Dialog-item {
+    border-color: tomato;
+    box-shadow: 0 0 1em #f003 inset;
+  }
+}
+
 .DialogTitle {
+  font-size: 1.5em;
   height: 2em;
   line-height: 2em;
 }
 
+.DialogSection {
+  margin-bottom: 1em;
+}
+
 .DialogHeading {
-  font-size: 0.8em;
+  font-size: 1em;
   height: 2em;
   line-height: 2em;
-  margin-top: 1em;
 }
 
 .DialogLink {
@@ -46,8 +69,7 @@
 
   .DialogInputLabel {
     display: block;
-    height: 1.2em;
-    line-height: 1.2em;
+    margin-bottom: 0.2em;
   }
 
   .DialogInnerInput {

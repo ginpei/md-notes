@@ -15,6 +15,13 @@ const Dialog: React.FC = ({ children }) => {
 
 export default Dialog;
 
+export const DialogSection: HtmlComponent<'section'> = (props) => (
+  <section
+    {...props}
+    className={`DialogSection ${props.className}`}
+  />
+);
+
 export const DialogTitle: HtmlComponent<'h1'> = (props) => {
   return (
     <h1
@@ -49,6 +56,24 @@ export const DialogInput: React.FC<DialogInputProp> = (props) => {
     <label className="container Dialog-item DialogInput">
       <span className="DialogInputLabel">{label}</span>
       <input {...inputProps} className="DialogInnerInput" />
+      {description && (
+        <div className="DialogInputDescription">{description}</div>
+      )}
+    </label>
+  );
+};
+
+interface DialogSelectProp extends HtmlProps<'select'> {
+  description?: string;
+  label: string;
+};
+
+export const DialogSelect: React.FC<DialogSelectProp> = (props) => {
+  const { description, label, ...inputProps } = props;
+  return (
+    <label className="container Dialog-item DialogInput">
+      <span className="DialogInputLabel">{label}</span>
+      <select {...inputProps} className="DialogInnerInput" />
       {description && (
         <div className="DialogInputDescription">{description}</div>
       )}

@@ -1,9 +1,9 @@
 import { History } from 'history';
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import Dialog, { DialogHeading, DialogLink, DialogTitle, DialogInput } from '../independents/Dialog';
+import Dialog, { DialogHeading, DialogInput, DialogLink, DialogSection, DialogTitle, DialogSelect } from '../independents/Dialog';
 import { BackLink } from '../independents/miscComponents';
-import { acDeleteNote, deleteNote, getNoteTitle, Note } from '../models/Notes';
+import { acDeleteNote, deleteNote, Note, getNoteTitle } from '../models/Notes';
 import { AppDispatch } from '../models/store';
 
 interface DispatchProps {
@@ -28,7 +28,8 @@ type ComponentProps =
 const EditorSettingsDialog: React.FC<ComponentProps> = (props) => {
   const { note } = props;
 
-  const [title, setTitle] = useState('Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, voluptatibus fugiat maxime labore sequi et ipsam autem iste voluptates repellat enim cupiditate laborum? Porro sapiente sequi hic nesciunt rerum illo.');
+  const [title, setTitle] = useState('');
+  const [access, setAccess] = useState('private');
 
   if (props.scene === 'settings-heyYo') {
     return (
@@ -67,36 +68,35 @@ const EditorSettingsDialog: React.FC<ComponentProps> = (props) => {
   return (
     <Dialog>
       <DialogTitle>Settings</DialogTitle>
-      <DialogLink to="?scene=settings-editor">Editor settings</DialogLink>
-      <DialogHeading>Note status</DialogHeading>
-      <DialogInput
-        description="Leave empty to pick from the first heading automatically."
-        label="Title"
-        onChange={(event) => setTitle(event.currentTarget.value)}
-        value={title}
-      />
-      <DialogLink to="?scene=settings-editor">Status</DialogLink>
-
-      <hr style={{ marginTop: '3rem' }}/>
-      <div className="container">
-        <label>
-          Title:
-          <input type="text" value={getNoteTitle(note)} disabled />
-        </label>
-        <hr/>
-        <label>
-          <input type="checkbox" disabled />
-          Private
-        </label>
-        <h2>Danger zone</h2>
-        <div className="dangerZone">
-          <button
-            onClick={onDeleteClick}
-          >
-            Delete
-          </button>
+      <DialogSection>
+        <DialogHeading>Note status</DialogHeading>
+        <DialogInput
+          description="Leave empty to pick from the first heading automatically."
+          label="Title"
+          onChange={(event) => setTitle(event.currentTarget.value)}
+          placeholder={getNoteTitle(note)}
+          value={title}
+        />
+        <DialogSelect
+          label="Access"
+          onChange={(event) => setAccess(event.currentTarget.value)}
+          value={access}
+        >
+          <option value="private">Private</option>
+          <option value="public">Public</option>
+        </DialogSelect>
+      </DialogSection>
+      <DialogSection>
+        <DialogHeading>General</DialogHeading>
+        <DialogLink to="?scene=settings-editor">Editor settings</DialogLink>
+        <DialogLink to="?scene=settings-heyYo">Hey Yo</DialogLink>
+      </DialogSection>
+      <DialogSection className="DialogDangerZone">
+        <DialogHeading>Danger zone</DialogHeading>
+        <div className="container Dialog-item">
+          <button onClick={onDeleteClick}>Delete</button>
         </div>
-      </div>
+      </DialogSection>
     </Dialog>
   );
 };
