@@ -32,12 +32,15 @@
 }
 
 .DialogLink {
+  background-color: #f9fcff;
+
   &:hover {
     background-color: #f0f9ff;
   }
 }
 
 .DialogInput {
+  background-color: #f9fcff;
   color: #666;
   height: auto;
 
@@ -51,7 +54,9 @@
   }
 
   .DialogInnerInput {
-    border-style: none;
+    background-color: inherit;
+    border-style: none none solid;
+    border-width: 1px;
     text-align: right;
     width: 100%;
   }
