@@ -1,16 +1,18 @@
 import { History } from 'history';
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import Dialog, { DialogHeading, DialogInput, DialogLink, DialogSection, DialogTitle, DialogSelect } from '../independents/Dialog';
+import Dialog, { DialogHeading, DialogInput, DialogLink, DialogSection, DialogSelect, DialogTitle } from '../independents/Dialog';
 import { BackLink } from '../independents/miscComponents';
-import { acDeleteNote, deleteNote, Note, getNoteTitle } from '../models/Notes';
+import { acCacheNote, acDeleteNote, deleteNote, getNoteTitle, Note, updateNote } from '../models/Notes';
 import { AppDispatch } from '../models/store';
 
 interface DispatchProps {
+  updateNote: (note: Note) => void;
   deleteNote: (note: Note) => void;
 }
 
 const mapDispatch = (dispatch: AppDispatch): DispatchProps => ({
+  updateNote: (note) => dispatch(acCacheNote(note)),
   deleteNote: (note) => dispatch(acDeleteNote(note)),
 });
 
@@ -29,7 +31,7 @@ const EditorSettingsDialog: React.FC<ComponentProps> = (props) => {
   const { note } = props;
 
   const [dangerous, setDangerous] = useState(false);
-  const [title, setTitle] = useState('');
+  const [title, setTitle] = useState(note.title);
   const [access, setAccess] = useState('private');
 
   if (props.scene === 'settings-heyYo') {
@@ -56,6 +58,15 @@ const EditorSettingsDialog: React.FC<ComponentProps> = (props) => {
     );
   }
 
+  const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const title = event.currentTarget.value;
+    updateNote({
+      ...props.note,
+      title,
+    })
+    setTitle(title);
+  };
+
   const onDeleteClick = async () => {
     const message = 'Are you sure you want to delete this note permanently?';
     const ok = window.confirm(message);
@@ -72,14 +83,15 @@ const EditorSettingsDialog: React.FC<ComponentProps> = (props) => {
       <DialogSection>
         <DialogHeading>Note status</DialogHeading>
         <DialogInput
-          description="Leave empty to pick from the first heading automatically."
+          description="Leave empty to pick the first heading automatically."
           label="Title"
-          onChange={(event) => setTitle(event.currentTarget.value)}
+          onChange={onTitleChange}
           placeholder={getNoteTitle(note)}
           value={title}
         />
         <DialogSelect
-          label="Access"
+          disabled={true}
+          label="Access (WIP)"
           onChange={(event) => setAccess(event.currentTarget.value)}
           value={access}
         >

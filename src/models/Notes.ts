@@ -141,6 +141,18 @@ export async function createNote(userId: string, initial?: Partial<Note>) {
   return note;
 }
 
+export function updateNote (
+  note: Note,
+  updatedAt?: firebase.firestore.Timestamp,
+) {
+  const coll = getNoteCollection();
+  const data: Note = {
+    ...note,
+    updatedAt: updatedAt || now(),
+  };
+  return coll.doc(note.id).set(data);
+}
+
 export function deleteNote (note: Note) {
   const coll = getNoteCollection();
   return coll.doc(note.id).delete();
