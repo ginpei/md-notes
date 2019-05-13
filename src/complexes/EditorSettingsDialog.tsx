@@ -79,6 +79,7 @@ const EditorSettingsDialog: React.FC<ComponentProps> = (props) => {
   return (
     <Dialog>
       <DialogTitle>Settings</DialogTitle>
+      <p className="container link" onClick={props.back}>← Back</p>
       <DialogSection>
         <DialogHeading>Note status</DialogHeading>
         <DialogInput
