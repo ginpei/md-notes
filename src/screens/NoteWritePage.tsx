@@ -101,7 +101,6 @@ const NoteWritePage: React.FC<PageProps> = (props) => {
         }
       },
       (error) => {
-        console.log('# error', error);
         // 404, which is handled
         if (error.code === 'permission-denied') {
           return;
