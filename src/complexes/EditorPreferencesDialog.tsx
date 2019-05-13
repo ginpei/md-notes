@@ -1,8 +1,26 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import Dialog, { DialogInput, DialogSection, DialogTitle } from '../independents/Dialog';
+import Dialog, { DialogHeading, DialogInput, DialogSection, DialogTitle } from '../independents/Dialog';
 import { acSetEditorPreferences, EditorPreferences, saveEditorPreferences } from '../models/EditorPreference';
 import { AppDispatch, AppState } from '../models/store';
+
+const EditorPreview = (props: { fontSize: number }) => (
+  <div className="container">
+    <textarea
+      style={{
+        fontSize: `${props.fontSize}px`,
+        height: '10rem',
+        resize: 'none',
+        width: '100%',
+      }}
+      value={`# Lorem ipsum
+
+Dolor sit amet consectetur adipisicing elit.
+
+Placeat libero maxime quis neque omnis nisi eveniet quidem magni similique, facilis nemo nulla in cumque voluptate nostrum culpa repellat velit illo?`}
+    />
+  </div>
+);
 
 interface StateProps {
   editorPreferences: EditorPreferences,
@@ -59,6 +77,10 @@ const EditorPreferencesDialog: React.FC<ComponentProps> = (props) => {
           type="number"
           value={fontSize}
         />
+      </DialogSection>
+      <DialogSection>
+        <DialogHeading>Preview</DialogHeading>
+        <EditorPreview fontSize={fontSize} />
       </DialogSection>
     </Dialog>
   );
