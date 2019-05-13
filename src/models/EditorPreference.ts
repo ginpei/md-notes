@@ -70,6 +70,22 @@ export function snapshotToRecord (
   };
 }
 
+export function getNiceFontSize (fontSize: number) {
+  if (fontSize === 0) {
+    return 16;
+  }
+
+  if (fontSize < 10) {
+    return 10;
+  }
+
+  if (fontSize > 30) {
+    return 30;
+  }
+
+  return Math.floor(fontSize);
+}
+
 export function saveEditorPreferences (
   pref: EditorPreferences,
   updatedAt?: firebase.firestore.Timestamp,
@@ -78,6 +94,7 @@ export function saveEditorPreferences (
   const query = ref.doc(pref.id);
   const data: EditorPreferences = {
     ...pref,
+    fontSize: getNiceFontSize(pref.fontSize),
     updatedAt: updatedAt || firebase.firestore.Timestamp.now(),
   };
   query.set(data);

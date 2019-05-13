@@ -41,6 +41,10 @@ const EditorPreferencesDialog: React.FC<ComponentProps> = (props) => {
     setFontSize(fontSize);
   };
 
+  const onFontSizeBlur = () => {
+    setFontSize(props.editorPreferences.fontSize);
+  };
+
   return (
     <Dialog>
       <DialogTitle>Editor preferences</DialogTitle>
@@ -48,6 +52,9 @@ const EditorPreferencesDialog: React.FC<ComponentProps> = (props) => {
       <DialogSection>
         <DialogInput
           label="Font size"
+          max="30"
+          min="10"
+          onBlur={onFontSizeBlur}
           onChange={onFontSizeChange}
           type="number"
           value={fontSize}
