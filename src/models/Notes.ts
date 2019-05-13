@@ -55,8 +55,8 @@ export function snapshotToNote (
   const data = s.data();
 
   if (!data) {
-    console.warn('Invalid note', s.id);
-    throw new Error('This note is gone');
+    console.warn('Note ID', s.id);
+    throw new Error('Failed to fetch note record');
   }
 
   if (!data.userId) {
@@ -101,19 +101,24 @@ export function connectUserNotes(
 export function connectNote(
   noteId: string,
   onNext: (note: Note | null) => void,
-  onError: (error: Error) => void = noop,
+  onError: (error: firebase.firestore.FirestoreError) => void = noop,
   onAny: () => void = noop,
 ) {
   const ref = getNoteCollection();
   const query = ref.doc(noteId);
   return query.onSnapshot(
     (snapshot) => {
-      const note = snapshotToNote(snapshot);
-      onNext(note);
+      try {
+        const note = snapshotToNote(snapshot);
+        onNext(note);
+      } catch (error) {
+        onError(error);
+        return;
+      }
       onAny();
     },
     (error) => {
-      onError(error);
+      onError(error as firebase.firestore.FirestoreError);
       onAny();
     },
   );

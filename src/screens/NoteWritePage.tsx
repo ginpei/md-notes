@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
 import EditorSettingsDialog from '../complexes/EditorSettingsDialog';
+import AppLayout from '../independents/AppLayout';
 import Dialog from '../independents/Dialog';
 import { getGetParams, noop } from '../misc';
 import { acCacheNote, connectNote, Note, notePath, now, saveNote } from '../models/Notes';
@@ -78,6 +79,7 @@ const NoteWritePage: React.FC<PageProps> = (props) => {
 
   const [content, setContent] = useState(note ? note.body : '');
   const [initialized, setInitialized] = useState(Boolean(note));
+  const [errors] = useState<Error[]>([]);
 
   useEffect(() => {
     if (!props.loggedIn) {
@@ -98,7 +100,17 @@ const NoteWritePage: React.FC<PageProps> = (props) => {
           setContent(note.body);
         }
       },
-      noop,
+      (error) => {
+        console.log('# error', error);
+        // 404, which is handled
+        if (error.code === 'permission-denied') {
+          return;
+        }
+
+        errors.push(error);
+        console.error('ERR', error);
+        setContent('');
+      },
       () => setInitialized(true),
     );
     return disconnect;
@@ -117,6 +129,19 @@ const NoteWritePage: React.FC<PageProps> = (props) => {
   }
 
   if (!note) {
+    if (errors.length > 0) {
+      return (
+        <AppLayout>
+          <h1>Error</h1>
+          <ul>
+            {errors.map((error) => (
+              <li key={error.message}>{error.message}</li>
+            ))}
+          </ul>
+        </AppLayout>
+      );
+    }
+
     return (
       <NotFoundPage/>
     );
