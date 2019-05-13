@@ -52,11 +52,13 @@ interface PageParams {
 }
 
 interface StateProps {
+  fontSize: number;
   loggedIn: boolean;
   note: Note;
 }
 
 const mapState = (state: AppState, props: PageProps): StateProps => ({
+  fontSize: state.editorPreferences.fontSize,
   loggedIn: state.currentUser.loggedIn,
   note: state.notes.docs[props.match.params.id],
 });
@@ -178,6 +180,9 @@ const NoteWritePage: React.FC<PageProps> = (props) => {
       <Editor
         value={content}
         onChange={onEditorChange}
+        style={{
+          fontSize: `${props.fontSize}px`,
+        }}
       />
       <ToolbarOuter>
         <button>↩</button>
