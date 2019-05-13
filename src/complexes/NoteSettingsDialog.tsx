@@ -25,7 +25,7 @@ type ComponentProps =
   & DispatchProps
   & OwnProps;
 
-const EditorSettingsDialog: React.FC<ComponentProps> = (props) => {
+const NoteSettingsDialog: React.FC<ComponentProps> = (props) => {
   const { note } = props;
 
   const [dangerous, setDangerous] = useState(false);
@@ -78,7 +78,7 @@ const EditorSettingsDialog: React.FC<ComponentProps> = (props) => {
 
   return (
     <Dialog>
-      <DialogTitle>Settings</DialogTitle>
+      <DialogTitle>Note settings</DialogTitle>
       <p className="container link" onClick={props.back}>← Back</p>
       <DialogSection>
         <DialogHeading>Note status</DialogHeading>
@@ -127,4 +127,4 @@ const EditorSettingsDialog: React.FC<ComponentProps> = (props) => {
   );
 };
 
-export default connect(null, mapDispatch)(EditorSettingsDialog);
+export default connect(null, mapDispatch)(NoteSettingsDialog);

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
-import EditorSettingsDialog from '../complexes/EditorSettingsDialog';
+import NoteSettingsDialog from '../complexes/NoteSettingsDialog';
 import AppLayout from '../independents/AppLayout';
 import Dialog from '../independents/Dialog';
 import { getGetParams, noop } from '../misc';
@@ -187,7 +187,7 @@ const NoteWritePage: React.FC<PageProps> = (props) => {
         <button onClick={onSettingsClick}>…</button>
       </ToolbarOuter>
       {isSetting && (
-        <EditorSettingsDialog
+        <NoteSettingsDialog
           back={back}
           note={note}
           onDelete={onDelete}
