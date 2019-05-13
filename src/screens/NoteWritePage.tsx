@@ -7,7 +7,7 @@ import EditorSettingsDialog from '../complexes/EditorSettingsDialog';
 import AppLayout from '../independents/AppLayout';
 import Dialog from '../independents/Dialog';
 import { getGetParams, noop } from '../misc';
-import { acCacheNote, connectNote, Note, notePath, now, saveNote } from '../models/Notes';
+import { acCacheNote, connectNote, Note, now, saveNote } from '../models/Notes';
 import { AppDispatch, AppState } from '../models/store';
 import InitializingPage from './InitializingPage';
 import NotFoundPage from './NotFoundPage';
@@ -146,6 +146,8 @@ const NoteWritePage: React.FC<PageProps> = (props) => {
     );
   }
 
+  const back = () => props.history.goBack();
+
   const onEditorChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newContent = event.currentTarget.value;
     setContent(newContent);
@@ -167,7 +169,7 @@ const NoteWritePage: React.FC<PageProps> = (props) => {
   const onDelete = () => {
     // move now without waiting the deletion completes
     // otherwise connection error occurs
-    props.history.push(notePath());
+    back();
   };
 
   return (
@@ -186,7 +188,7 @@ const NoteWritePage: React.FC<PageProps> = (props) => {
       </ToolbarOuter>
       {isSetting && (
         <EditorSettingsDialog
-          history={props.history}
+          back={back}
           note={note}
           onDelete={onDelete}
           scene={scene}

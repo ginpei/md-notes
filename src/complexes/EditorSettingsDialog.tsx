@@ -1,8 +1,6 @@
-import { History } from 'history';
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import Dialog, { DialogHeading, DialogInput, DialogLink, DialogSection, DialogSelect, DialogTitle } from '../independents/Dialog';
-import { BackLink } from '../independents/miscComponents';
 import { acCacheNote, acDeleteNote, deleteNote, getNoteTitle, Note, updateNote } from '../models/Notes';
 import { AppDispatch } from '../models/store';
 
@@ -17,7 +15,7 @@ const mapDispatch = (dispatch: AppDispatch): DispatchProps => ({
 });
 
 interface OwnProps {
-  history: History<any>;
+  back: () => void;
   note: Note;
   onDelete: (note: Note) => void;
   scene?: 'settings-heyYo' | string;
@@ -39,7 +37,7 @@ const EditorSettingsDialog: React.FC<ComponentProps> = (props) => {
       <Dialog>
         <h1>Hey Yo!</h1>
         <p>
-          <BackLink history={props.history}>← Back</BackLink>
+          <span className="link" onClick={props.back}>← Back</span>
         </p>
       </Dialog>
     );
@@ -51,7 +49,7 @@ const EditorSettingsDialog: React.FC<ComponentProps> = (props) => {
         <div className="container">
           <h1>Editor settings</h1>
           <p>
-            <BackLink history={props.history}>← Back</BackLink>
+            <span className="link" onClick={props.back}>← Back</span>
           </p>
         </div>
       </Dialog>
@@ -73,6 +71,7 @@ const EditorSettingsDialog: React.FC<ComponentProps> = (props) => {
     if (ok) {
       deleteNote(note);
       props.deleteNote(note);
+      props.back();
       props.onDelete(note);
     }
   };
