@@ -30,7 +30,7 @@ type ComponentProps =
   & DispatchProps
   & OwnProps;
 
-const EditorSettingsDialog: React.FC<ComponentProps> = (props) => {
+const EditorPreferencesDialog: React.FC<ComponentProps> = (props) => {
   const [fontSize, setFontSize] = useState(props.editorPreferences.fontSize);
 
   const onFontSizeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,7 +44,7 @@ const EditorSettingsDialog: React.FC<ComponentProps> = (props) => {
 
   return (
     <Dialog>
-      <DialogTitle>Editor settings</DialogTitle>
+      <DialogTitle>Editor preferences</DialogTitle>
       <p className="container link" onClick={props.back}>← Back</p>
       <DialogSection>
         <DialogInput
@@ -58,4 +58,4 @@ const EditorSettingsDialog: React.FC<ComponentProps> = (props) => {
   );
 };
 
-export default connect(mapState, mapDispatch)(EditorSettingsDialog);
+export default connect(mapState, mapDispatch)(EditorPreferencesDialog);

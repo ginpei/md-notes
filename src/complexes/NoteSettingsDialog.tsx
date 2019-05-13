@@ -101,7 +101,7 @@ const NoteSettingsDialog: React.FC<ComponentProps> = (props) => {
       </DialogSection>
       <DialogSection>
         <DialogHeading>General</DialogHeading>
-        <DialogLink to="?scene=settings-editor">Editor settings</DialogLink>
+        <DialogLink to="?scene=settings-editor">Editor preferences</DialogLink>
         <DialogLink to="?scene=settings-heyYo">Hey Yo</DialogLink>
       </DialogSection>
       <DialogSection className="DialogDangerZone">
