@@ -11,6 +11,7 @@ import { acCacheNote, connectNote, Note, now, saveNote } from '../models/Notes';
 import { AppDispatch, AppState } from '../models/store';
 import InitializingPage from './InitializingPage';
 import NotFoundPage from './NotFoundPage';
+import EditorSettingsDialog from '../complexes/EditorSettingsDialog';
 
 const Outer = styled.div`
   background-color: snow;
@@ -186,7 +187,12 @@ const NoteWritePage: React.FC<PageProps> = (props) => {
         <button onClick={onPreviewClick}>👁</button>
         <button onClick={onSettingsClick}>…</button>
       </ToolbarOuter>
-      {isSetting && (
+      {scene === 'settings-editor' && (
+        <EditorSettingsDialog
+          back={back}
+        />
+      )}
+      {scene === 'settings-top' && (
         <NoteSettingsDialog
           back={back}
           note={note}
