@@ -197,7 +197,6 @@ const NoteWritePage: React.FC<PageProps> = (props) => {
           back={back}
           note={note}
           onDelete={onDelete}
-          scene={scene}
         />
       )}
       {isPreviewing && (

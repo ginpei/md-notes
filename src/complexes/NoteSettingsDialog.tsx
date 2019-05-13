@@ -18,7 +18,6 @@ interface OwnProps {
   back: () => void;
   note: Note;
   onDelete: (note: Note) => void;
-  scene?: 'settings-heyYo' | string;
 }
 
 type ComponentProps =
@@ -31,30 +30,6 @@ const NoteSettingsDialog: React.FC<ComponentProps> = (props) => {
   const [dangerous, setDangerous] = useState(false);
   const [title, setTitle] = useState(note.title);
   const [access, setAccess] = useState('private');
-
-  if (props.scene === 'settings-heyYo') {
-    return (
-      <Dialog>
-        <h1>Hey Yo!</h1>
-        <p>
-          <span className="link" onClick={props.back}>← Back</span>
-        </p>
-      </Dialog>
-    );
-  }
-
-  if (props.scene === 'settings-editor') {
-    return (
-      <Dialog>
-        <div className="container">
-          <h1>Editor settings</h1>
-          <p>
-            <span className="link" onClick={props.back}>← Back</span>
-          </p>
-        </div>
-      </Dialog>
-    );
-  }
 
   const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const title = event.currentTarget.value;
