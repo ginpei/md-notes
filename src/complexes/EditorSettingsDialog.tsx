@@ -2,14 +2,23 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import Dialog, { DialogHeading, DialogInput, DialogLink, DialogSection, DialogSelect, DialogTitle } from '../independents/Dialog';
 import { acCacheNote, acDeleteNote, deleteNote, getNoteTitle, Note, updateNote } from '../models/Notes';
-import { AppDispatch } from '../models/store';
+import { AppDispatch, AppState } from '../models/store';
+import { EditorPreferences, acSetEditorPreferences, saveEditorPreferences } from '../models/EditorPreference';
+
+interface StateProps {
+  editorPreferences: EditorPreferences,
+}
+
+const mapState = ({ editorPreferences }: AppState): StateProps => ({
+  editorPreferences,
+});
 
 interface DispatchProps {
-  // updateNote: (note: Note) => void;
+  setEditorPreferences: (pref: EditorPreferences) => void;
 }
 
 const mapDispatch = (dispatch: AppDispatch): DispatchProps => ({
-  // updateNote: (note) => dispatch(acCacheNote(note)),
+  setEditorPreferences: (pref) => dispatch(acSetEditorPreferences(pref)),
 });
 
 interface OwnProps {
@@ -17,19 +26,20 @@ interface OwnProps {
 }
 
 type ComponentProps =
+  & StateProps
   & DispatchProps
   & OwnProps;
 
 const EditorSettingsDialog: React.FC<ComponentProps> = (props) => {
-  const [fontSize, setTitle] = useState(16);
+  const [fontSize, setFontSize] = useState(props.editorPreferences.fontSize);
 
   const onFontSizeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const fontSize = Number(event.currentTarget.value);
-    // updateNote({
-    //   ...props.note,
-    //   title: fontSize,
-    // })
-    setTitle(fontSize);
+    saveEditorPreferences({
+      ...props.editorPreferences,
+      fontSize,
+    });
+    setFontSize(fontSize);
   };
 
   return (
@@ -48,4 +58,4 @@ const EditorSettingsDialog: React.FC<ComponentProps> = (props) => {
   );
 };
 
-export default connect(null, mapDispatch)(EditorSettingsDialog);
+export default connect(mapState, mapDispatch)(EditorSettingsDialog);

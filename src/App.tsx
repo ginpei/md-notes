@@ -12,6 +12,8 @@ import NoteListPage from './screens/NoteListPage';
 import NoteViewPage from './screens/NoteViewPage';
 import NoteWritePage from './screens/NoteWritePage';
 import NotFoundPage from './screens/NotFoundPage';
+import { noop } from '@babel/types';
+import { connectUserEditorPreferences, acSetEditorPreferences } from './models/EditorPreference';
 
 const App: React.FC = () => {
   const [initialized, setInitialized] = useState(false);
@@ -27,6 +29,20 @@ const App: React.FC = () => {
       },
     );
   }, []);
+
+  useEffect(() => {
+    if (!user) {
+      return noop;
+    }
+
+    return connectUserEditorPreferences(
+      user.uid,
+      (preferences) => {
+        store.dispatch(acSetEditorPreferences(preferences));
+        setInitialized(true);
+      },
+    );
+  }, [user]);
 
   if (!initialized) {
     return (
