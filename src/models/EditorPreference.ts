@@ -56,6 +56,13 @@ export function getNoteCollection () {
 export function snapshotToRecord (
   s: firebase.firestore.DocumentSnapshot,
 ): EditorPreferences {
+  if (!s.exists) {
+    return {
+      ...initialState,
+      id: s.id,
+    };
+  }
+
   const data = s.data();
 
   if (!data) {
