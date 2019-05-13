@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
+import EditorPreferencesDialog from '../complexes/EditorPreferencesDialog';
 import NoteSettingsDialog from '../complexes/NoteSettingsDialog';
 import AppLayout from '../independents/AppLayout';
 import Dialog from '../independents/Dialog';
@@ -11,7 +12,6 @@ import { acCacheNote, connectNote, Note, now, saveNote } from '../models/Notes';
 import { AppDispatch, AppState } from '../models/store';
 import InitializingPage from './InitializingPage';
 import NotFoundPage from './NotFoundPage';
-import EditorPreferencesDialog from '../complexes/EditorPreferencesDialog';
 
 const Outer = styled.div`
   background-color: snow;

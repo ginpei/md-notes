@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import Dialog, { DialogHeading, DialogInput, DialogLink, DialogSection, DialogSelect, DialogTitle } from '../independents/Dialog';
-import { acCacheNote, acDeleteNote, deleteNote, getNoteTitle, Note, updateNote } from '../models/Notes';
+import Dialog, { DialogInput, DialogSection, DialogTitle } from '../independents/Dialog';
+import { acSetEditorPreferences, EditorPreferences, saveEditorPreferences } from '../models/EditorPreference';
 import { AppDispatch, AppState } from '../models/store';
-import { EditorPreferences, acSetEditorPreferences, saveEditorPreferences } from '../models/EditorPreference';
 
 interface StateProps {
   editorPreferences: EditorPreferences,
