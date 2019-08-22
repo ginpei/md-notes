@@ -116,13 +116,13 @@ const NoteWritePage: React.FC<PageProps> = (props) => {
       () => setInitialized(true),
     );
     return disconnect;
-  }, [props.loggedIn, noteId, initialized]);
+  }, [props.loggedIn, noteId, initialized, props, errors]);
 
   const params = getGetParams(props.location.search);
   const scene = params['scene'] || '';
 
   const isPreviewing = scene.startsWith('preview');
-  const isSetting = scene.startsWith('settings-');
+  // const isSetting = scene.startsWith('settings-');
 
   if (!initialized) {
     return (

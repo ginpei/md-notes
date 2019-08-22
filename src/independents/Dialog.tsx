@@ -21,6 +21,7 @@ export const DialogSection: HtmlComponent<'section'> = (props) => (
 );
 
 export const DialogTitle: HtmlComponent<'h1'> = (props) => (
+  // eslint-disable-next-line jsx-a11y/heading-has-content
   <h1
     {...props}
     className="container DialogTitle"
@@ -28,6 +29,7 @@ export const DialogTitle: HtmlComponent<'h1'> = (props) => (
 );
 
 export const DialogHeading: HtmlComponent<'h2'> = (props) => (
+  // eslint-disable-next-line jsx-a11y/heading-has-content
   <h2
     {...props}
     className="container DialogHeading"

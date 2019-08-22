@@ -18,7 +18,9 @@ const NoteListItem: React.FC<{ note: Note }> = ({ note }) => {
     <li>
       <Link to={notePath(note)}>{getNoteTitle(note)}</Link>
       {' '}
-      <Link to={notePath(note, 'write')}>📝</Link>
+      <Link to={notePath(note, 'write')}>
+        <span role="img" aria-label="Write">📝</span>
+      </Link>
       {' '}
       <UpdatedAt>({updatedAtToString(note.updatedAt)})</UpdatedAt>
     </li>
@@ -72,7 +74,7 @@ const NoteListPage: React.FC<PageProps> = (props) => {
         setInitialized(true);
       },
     );
-  }, [props.loggedIn, props.userId]);
+  }, [props, props.loggedIn, props.userId]);
 
   if (!initialized || working) {
     return (

@@ -36,7 +36,7 @@ type PageProps =
 
 const NoteWritePage: React.FC<PageProps> = (props) => {
   const noteId = props.match.params.id;
-  const { note } = props;
+  const { cacheNote, note } = props;
 
   const [initialized, setInitialized] = useState(Boolean(note));
 
@@ -45,14 +45,14 @@ const NoteWritePage: React.FC<PageProps> = (props) => {
       noteId,
       (note) => {
         if (note) {
-          props.cacheNote(note);
+          cacheNote(note);
         }
       },
       noop,
       () => setInitialized(true),
     );
     return disconnect;
-  }, [noteId]);
+  }, [cacheNote, noteId]);
 
   if (!initialized) {
     return (

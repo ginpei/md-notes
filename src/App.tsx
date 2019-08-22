@@ -19,16 +19,17 @@ const App: React.FC = () => {
   const [initialized, setInitialized] = useState(false);
   const [user, setUser] = useState<firebase.User | null>(null);
   const [store] = useState(createAppStore());
+  const { dispatch } = store;
 
   useEffect(() => {
     return connectCurrentUser(
       (user) => {
         setUser(user);
-        store.dispatch(acSetCurrentUser(user));
+        dispatch(acSetCurrentUser(user));
         setInitialized(true);
       },
     );
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (!user) {
@@ -38,11 +39,11 @@ const App: React.FC = () => {
     return connectUserEditorPreferences(
       user.uid,
       (preferences) => {
-        store.dispatch(acSetEditorPreferences(preferences));
+        dispatch(acSetEditorPreferences(preferences));
         setInitialized(true);
       },
     );
-  }, [user]);
+  }, [user, dispatch]);
 
   if (!initialized) {
     return (

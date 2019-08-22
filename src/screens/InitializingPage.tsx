@@ -32,7 +32,9 @@ const Shaking = styled.div`
 const InitializingPage: React.FC = () => {
   return (
     <Center>
-      <Shaking>📝</Shaking>
+      <Shaking>
+        <span role="img" aria-label="loading...">📝</span>
+      </Shaking>
     </Center>
   );
 }
